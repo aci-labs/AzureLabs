@@ -10,4 +10,4 @@ This project contains the AzureLabs project.
 
 ## Readme Files
 
-- [Fabric Capacity Management/README.md](./AzureLabs/Fabric Capacity Management/README.md).
+- [Fabric Capacity Management/README.md](./Fabric%20Capacity%20Management/README.md).
