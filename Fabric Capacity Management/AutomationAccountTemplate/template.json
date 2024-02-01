@@ -1,0 +1,2847 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "automationAccounts_FabricCapacityManagement_name": {
+            "defaultValue": "FabricCapacityManagement",
+            "type": "String"
+        }
+    },
+    "variables": {},
+    "resources": [
+        {
+            "type": "Microsoft.Automation/automationAccounts",
+            "apiVersion": "2023-11-01",
+            "name": "[parameters('automationAccounts_FabricCapacityManagement_name')]",
+            "location": "westeurope",
+            "tags": {
+                "CreatedBy": "achraf.cherki",
+                "CostCenter": "Internal",
+                "application": "Fabric"
+            },
+            "identity": {
+                "type": "SystemAssigned"
+            },
+            "properties": {
+                "publicNetworkAccess": true,
+                "disableLocalAuth": false,
+                "sku": {
+                    "name": "Basic"
+                },
+                "encryption": {
+                    "keySource": "Microsoft.Automation",
+                    "identity": {}
+                }
+            }
+        },
+        {
+            "type": "Microsoft.Automation/automationAccounts/connectionTypes",
+            "apiVersion": "2023-11-01",
+            "name": "[concat(parameters('automationAccounts_FabricCapacityManagement_name'), '/Azure')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Automation/automationAccounts', parameters('automationAccounts_FabricCapacityManagement_name'))]"
+            ],
+            "properties": {
+                "isGlobal": true,
+                "fieldDefinitions": {
+                    "AutomationCertificateName": {
+                        "isEncrypted": false,
+                        "isOptional": false,
+                        "type": "System.String"
+                    },
+                    "SubscriptionID": {
+                        "isEncrypted": false,
+                        "isOptional": false,
+                        "type": "System.String"
+                    }
+                }
+            }
+        },
+        {
+            "type": "Microsoft.Automation/automationAccounts/connectionTypes",
+            "apiVersion": "2023-11-01",
+            "name": "[concat(parameters('automationAccounts_FabricCapacityManagement_name'), '/AzureClassicCertificate')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Automation/automationAccounts', parameters('automationAccounts_FabricCapacityManagement_name'))]"
+            ],
+            "properties": {
+                "isGlobal": true,
+                "fieldDefinitions": {
+                    "SubscriptionName": {
+                        "isEncrypted": false,
+                        "isOptional": false,
+                        "type": "System.String"
+                    },
+                    "SubscriptionId": {
+                        "isEncrypted": false,
+                        "isOptional": false,
+                        "type": "System.String"
+                    },
+                    "CertificateAssetName": {
+                        "isEncrypted": false,
+                        "isOptional": false,
+                        "type": "System.String"
+                    }
+                }
+            }
+        },
+        {
+            "type": "Microsoft.Automation/automationAccounts/connectionTypes",
+            "apiVersion": "2023-11-01",
+            "name": "[concat(parameters('automationAccounts_FabricCapacityManagement_name'), '/AzureServicePrincipal')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Automation/automationAccounts', parameters('automationAccounts_FabricCapacityManagement_name'))]"
+            ],
+            "properties": {
+                "isGlobal": true,
+                "fieldDefinitions": {
+                    "ApplicationId": {
+                        "isEncrypted": false,
+                        "isOptional": false,
+                        "type": "System.String"
+                    },
+                    "TenantId": {
+                        "isEncrypted": false,
+                        "isOptional": false,
+                        "type": "System.String"
+                    },
+                    "CertificateThumbprint": {
+                        "isEncrypted": false,
+                        "isOptional": false,
+                        "type": "System.String"
+                    },
+                    "SubscriptionId": {
+                        "isEncrypted": false,
+                        "isOptional": false,
+                        "type": "System.String"
+                    }
+                }
+            }
+        },
+        {
+            "type": "Microsoft.Automation/automationAccounts/jobs",
+            "apiVersion": "2023-11-01",
+            "name": "[concat(parameters('automationAccounts_FabricCapacityManagement_name'), '/31fd765b-de9d-492e-b350-63a98ec19b0f')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Automation/automationAccounts', parameters('automationAccounts_FabricCapacityManagement_name'))]"
+            ],
+            "properties": {
+                "runbook": {
+                    "name": "ResumeCapacity"
+                }
+            }
+        },
+        {
+            "type": "Microsoft.Automation/automationAccounts/jobs",
+            "apiVersion": "2023-11-01",
+            "name": "[concat(parameters('automationAccounts_FabricCapacityManagement_name'), '/4036d953-6f6e-4c95-9806-bd250b594b3c')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Automation/automationAccounts', parameters('automationAccounts_FabricCapacityManagement_name'))]"
+            ],
+            "properties": {
+                "runbook": {
+                    "name": "import_py3package_from_pypi"
+                }
+            }
+        },
+        {
+            "type": "Microsoft.Automation/automationAccounts/jobs",
+            "apiVersion": "2023-11-01",
+            "name": "[concat(parameters('automationAccounts_FabricCapacityManagement_name'), '/9fc1c31d-3f01-425d-8587-665b860eb688')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Automation/automationAccounts', parameters('automationAccounts_FabricCapacityManagement_name'))]"
+            ],
+            "properties": {
+                "runbook": {
+                    "name": "ResumeCapacity"
+                }
+            }
+        },
+        {
+            "type": "Microsoft.Automation/automationAccounts/modules",
+            "apiVersion": "2023-11-01",
+            "name": "[concat(parameters('automationAccounts_FabricCapacityManagement_name'), '/AuditPolicyDsc')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Automation/automationAccounts', parameters('automationAccounts_FabricCapacityManagement_name'))]"
+            ],
+            "properties": {
+                "contentLink": {}
+            }
+        },
+        {
+            "type": "Microsoft.Automation/automationAccounts/modules",
+            "apiVersion": "2023-11-01",
+            "name": "[concat(parameters('automationAccounts_FabricCapacityManagement_name'), '/Az')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Automation/automationAccounts', parameters('automationAccounts_FabricCapacityManagement_name'))]"
+            ],
+            "properties": {
+                "contentLink": {}
+            }
+        },
+        {
+            "type": "Microsoft.Automation/automationAccounts/modules",
+            "apiVersion": "2023-11-01",
+            "name": "[concat(parameters('automationAccounts_FabricCapacityManagement_name'), '/Az.Accounts')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Automation/automationAccounts', parameters('automationAccounts_FabricCapacityManagement_name'))]"
+            ],
+            "properties": {
+                "contentLink": {}
+            }
+        },
+        {
+            "type": "Microsoft.Automation/automationAccounts/modules",
+            "apiVersion": "2023-11-01",
+            "name": "[concat(parameters('automationAccounts_FabricCapacityManagement_name'), '/Az.Advisor')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Automation/automationAccounts', parameters('automationAccounts_FabricCapacityManagement_name'))]"
+            ],
+            "properties": {
+                "contentLink": {}
+            }
+        },
+        {
+            "type": "Microsoft.Automation/automationAccounts/modules",
+            "apiVersion": "2023-11-01",
+            "name": "[concat(parameters('automationAccounts_FabricCapacityManagement_name'), '/Az.Aks')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Automation/automationAccounts', parameters('automationAccounts_FabricCapacityManagement_name'))]"
+            ],
+            "properties": {
+                "contentLink": {}
+            }
+        },
+        {
+            "type": "Microsoft.Automation/automationAccounts/modules",
+            "apiVersion": "2023-11-01",
+            "name": "[concat(parameters('automationAccounts_FabricCapacityManagement_name'), '/Az.AnalysisServices')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Automation/automationAccounts', parameters('automationAccounts_FabricCapacityManagement_name'))]"
+            ],
+            "properties": {
+                "contentLink": {}
+            }
+        },
+        {
+            "type": "Microsoft.Automation/automationAccounts/modules",
+            "apiVersion": "2023-11-01",
+            "name": "[concat(parameters('automationAccounts_FabricCapacityManagement_name'), '/Az.ApiManagement')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Automation/automationAccounts', parameters('automationAccounts_FabricCapacityManagement_name'))]"
+            ],
+            "properties": {
+                "contentLink": {}
+            }
+        },
+        {
+            "type": "Microsoft.Automation/automationAccounts/modules",
+            "apiVersion": "2023-11-01",
+            "name": "[concat(parameters('automationAccounts_FabricCapacityManagement_name'), '/Az.AppConfiguration')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Automation/automationAccounts', parameters('automationAccounts_FabricCapacityManagement_name'))]"
+            ],
+            "properties": {
+                "contentLink": {}
+            }
+        },
+        {
+            "type": "Microsoft.Automation/automationAccounts/modules",
+            "apiVersion": "2023-11-01",
+            "name": "[concat(parameters('automationAccounts_FabricCapacityManagement_name'), '/Az.ApplicationInsights')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Automation/automationAccounts', parameters('automationAccounts_FabricCapacityManagement_name'))]"
+            ],
+            "properties": {
+                "contentLink": {}
+            }
+        },
+        {
+            "type": "Microsoft.Automation/automationAccounts/modules",
+            "apiVersion": "2023-11-01",
+            "name": "[concat(parameters('automationAccounts_FabricCapacityManagement_name'), '/Az.Attestation')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Automation/automationAccounts', parameters('automationAccounts_FabricCapacityManagement_name'))]"
+            ],
+            "properties": {
+                "contentLink": {}
+            }
+        },
+        {
+            "type": "Microsoft.Automation/automationAccounts/modules",
+            "apiVersion": "2023-11-01",
+            "name": "[concat(parameters('automationAccounts_FabricCapacityManagement_name'), '/Az.Automation')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Automation/automationAccounts', parameters('automationAccounts_FabricCapacityManagement_name'))]"
+            ],
+            "properties": {
+                "contentLink": {}
+            }
+        },
+        {
+            "type": "Microsoft.Automation/automationAccounts/modules",
+            "apiVersion": "2023-11-01",
+            "name": "[concat(parameters('automationAccounts_FabricCapacityManagement_name'), '/Az.Batch')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Automation/automationAccounts', parameters('automationAccounts_FabricCapacityManagement_name'))]"
+            ],
+            "properties": {
+                "contentLink": {}
+            }
+        },
+        {
+            "type": "Microsoft.Automation/automationAccounts/modules",
+            "apiVersion": "2023-11-01",
+            "name": "[concat(parameters('automationAccounts_FabricCapacityManagement_name'), '/Az.Billing')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Automation/automationAccounts', parameters('automationAccounts_FabricCapacityManagement_name'))]"
+            ],
+            "properties": {
+                "contentLink": {}
+            }
+        },
+        {
+            "type": "Microsoft.Automation/automationAccounts/modules",
+            "apiVersion": "2023-11-01",
+            "name": "[concat(parameters('automationAccounts_FabricCapacityManagement_name'), '/Az.Cdn')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Automation/automationAccounts', parameters('automationAccounts_FabricCapacityManagement_name'))]"
+            ],
+            "properties": {
+                "contentLink": {}
+            }
+        },
+        {
+            "type": "Microsoft.Automation/automationAccounts/modules",
+            "apiVersion": "2023-11-01",
+            "name": "[concat(parameters('automationAccounts_FabricCapacityManagement_name'), '/Az.CloudService')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Automation/automationAccounts', parameters('automationAccounts_FabricCapacityManagement_name'))]"
+            ],
+            "properties": {
+                "contentLink": {}
+            }
+        },
+        {
+            "type": "Microsoft.Automation/automationAccounts/modules",
+            "apiVersion": "2023-11-01",
+            "name": "[concat(parameters('automationAccounts_FabricCapacityManagement_name'), '/Az.CognitiveServices')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Automation/automationAccounts', parameters('automationAccounts_FabricCapacityManagement_name'))]"
+            ],
+            "properties": {
+                "contentLink": {}
+            }
+        },
+        {
+            "type": "Microsoft.Automation/automationAccounts/modules",
+            "apiVersion": "2023-11-01",
+            "name": "[concat(parameters('automationAccounts_FabricCapacityManagement_name'), '/Az.Compute')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Automation/automationAccounts', parameters('automationAccounts_FabricCapacityManagement_name'))]"
+            ],
+            "properties": {
+                "contentLink": {}
+            }
+        },
+        {
+            "type": "Microsoft.Automation/automationAccounts/modules",
+            "apiVersion": "2023-11-01",
+            "name": "[concat(parameters('automationAccounts_FabricCapacityManagement_name'), '/Az.ContainerInstance')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Automation/automationAccounts', parameters('automationAccounts_FabricCapacityManagement_name'))]"
+            ],
+            "properties": {
+                "contentLink": {}
+            }
+        },
+        {
+            "type": "Microsoft.Automation/automationAccounts/modules",
+            "apiVersion": "2023-11-01",
+            "name": "[concat(parameters('automationAccounts_FabricCapacityManagement_name'), '/Az.ContainerRegistry')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Automation/automationAccounts', parameters('automationAccounts_FabricCapacityManagement_name'))]"
+            ],
+            "properties": {
+                "contentLink": {}
+            }
+        },
+        {
+            "type": "Microsoft.Automation/automationAccounts/modules",
+            "apiVersion": "2023-11-01",
+            "name": "[concat(parameters('automationAccounts_FabricCapacityManagement_name'), '/Az.CosmosDB')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Automation/automationAccounts', parameters('automationAccounts_FabricCapacityManagement_name'))]"
+            ],
+            "properties": {
+                "contentLink": {}
+            }
+        },
+        {
+            "type": "Microsoft.Automation/automationAccounts/modules",
+            "apiVersion": "2023-11-01",
+            "name": "[concat(parameters('automationAccounts_FabricCapacityManagement_name'), '/Az.DataBoxEdge')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Automation/automationAccounts', parameters('automationAccounts_FabricCapacityManagement_name'))]"
+            ],
+            "properties": {
+                "contentLink": {}
+            }
+        },
+        {
+            "type": "Microsoft.Automation/automationAccounts/modules",
+            "apiVersion": "2023-11-01",
+            "name": "[concat(parameters('automationAccounts_FabricCapacityManagement_name'), '/Az.Databricks')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Automation/automationAccounts', parameters('automationAccounts_FabricCapacityManagement_name'))]"
+            ],
+            "properties": {
+                "contentLink": {}
+            }
+        },
+        {
+            "type": "Microsoft.Automation/automationAccounts/modules",
+            "apiVersion": "2023-11-01",
+            "name": "[concat(parameters('automationAccounts_FabricCapacityManagement_name'), '/Az.DataFactory')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Automation/automationAccounts', parameters('automationAccounts_FabricCapacityManagement_name'))]"
+            ],
+            "properties": {
+                "contentLink": {}
+            }
+        },
+        {
+            "type": "Microsoft.Automation/automationAccounts/modules",
+            "apiVersion": "2023-11-01",
+            "name": "[concat(parameters('automationAccounts_FabricCapacityManagement_name'), '/Az.DataLakeAnalytics')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Automation/automationAccounts', parameters('automationAccounts_FabricCapacityManagement_name'))]"
+            ],
+            "properties": {
+                "contentLink": {}
+            }
+        },
+        {
+            "type": "Microsoft.Automation/automationAccounts/modules",
+            "apiVersion": "2023-11-01",
+            "name": "[concat(parameters('automationAccounts_FabricCapacityManagement_name'), '/Az.DataLakeStore')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Automation/automationAccounts', parameters('automationAccounts_FabricCapacityManagement_name'))]"
+            ],
+            "properties": {
+                "contentLink": {}
+            }
+        },
+        {
+            "type": "Microsoft.Automation/automationAccounts/modules",
+            "apiVersion": "2023-11-01",
+            "name": "[concat(parameters('automationAccounts_FabricCapacityManagement_name'), '/Az.DataShare')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Automation/automationAccounts', parameters('automationAccounts_FabricCapacityManagement_name'))]"
+            ],
+            "properties": {
+                "contentLink": {}
+            }
+        },
+        {
+            "type": "Microsoft.Automation/automationAccounts/modules",
+            "apiVersion": "2023-11-01",
+            "name": "[concat(parameters('automationAccounts_FabricCapacityManagement_name'), '/Az.DeploymentManager')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Automation/automationAccounts', parameters('automationAccounts_FabricCapacityManagement_name'))]"
+            ],
+            "properties": {
+                "contentLink": {}
+            }
+        },
+        {
+            "type": "Microsoft.Automation/automationAccounts/modules",
+            "apiVersion": "2023-11-01",
+            "name": "[concat(parameters('automationAccounts_FabricCapacityManagement_name'), '/Az.DesktopVirtualization')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Automation/automationAccounts', parameters('automationAccounts_FabricCapacityManagement_name'))]"
+            ],
+            "properties": {
+                "contentLink": {}
+            }
+        },
+        {
+            "type": "Microsoft.Automation/automationAccounts/modules",
+            "apiVersion": "2023-11-01",
+            "name": "[concat(parameters('automationAccounts_FabricCapacityManagement_name'), '/Az.DevTestLabs')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Automation/automationAccounts', parameters('automationAccounts_FabricCapacityManagement_name'))]"
+            ],
+            "properties": {
+                "contentLink": {}
+            }
+        },
+        {
+            "type": "Microsoft.Automation/automationAccounts/modules",
+            "apiVersion": "2023-11-01",
+            "name": "[concat(parameters('automationAccounts_FabricCapacityManagement_name'), '/Az.Dns')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Automation/automationAccounts', parameters('automationAccounts_FabricCapacityManagement_name'))]"
+            ],
+            "properties": {
+                "contentLink": {}
+            }
+        },
+        {
+            "type": "Microsoft.Automation/automationAccounts/modules",
+            "apiVersion": "2023-11-01",
+            "name": "[concat(parameters('automationAccounts_FabricCapacityManagement_name'), '/Az.EventGrid')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Automation/automationAccounts', parameters('automationAccounts_FabricCapacityManagement_name'))]"
+            ],
+            "properties": {
+                "contentLink": {}
+            }
+        },
+        {
+            "type": "Microsoft.Automation/automationAccounts/modules",
+            "apiVersion": "2023-11-01",
+            "name": "[concat(parameters('automationAccounts_FabricCapacityManagement_name'), '/Az.EventHub')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Automation/automationAccounts', parameters('automationAccounts_FabricCapacityManagement_name'))]"
+            ],
+            "properties": {
+                "contentLink": {}
+            }
+        },
+        {
+            "type": "Microsoft.Automation/automationAccounts/modules",
+            "apiVersion": "2023-11-01",
+            "name": "[concat(parameters('automationAccounts_FabricCapacityManagement_name'), '/Az.FrontDoor')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Automation/automationAccounts', parameters('automationAccounts_FabricCapacityManagement_name'))]"
+            ],
+            "properties": {
+                "contentLink": {}
+            }
+        },
+        {
+            "type": "Microsoft.Automation/automationAccounts/modules",
+            "apiVersion": "2023-11-01",
+            "name": "[concat(parameters('automationAccounts_FabricCapacityManagement_name'), '/Az.Functions')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Automation/automationAccounts', parameters('automationAccounts_FabricCapacityManagement_name'))]"
+            ],
+            "properties": {
+                "contentLink": {}
+            }
+        },
+        {
+            "type": "Microsoft.Automation/automationAccounts/modules",
+            "apiVersion": "2023-11-01",
+            "name": "[concat(parameters('automationAccounts_FabricCapacityManagement_name'), '/Az.HDInsight')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Automation/automationAccounts', parameters('automationAccounts_FabricCapacityManagement_name'))]"
+            ],
+            "properties": {
+                "contentLink": {}
+            }
+        },
+        {
+            "type": "Microsoft.Automation/automationAccounts/modules",
+            "apiVersion": "2023-11-01",
+            "name": "[concat(parameters('automationAccounts_FabricCapacityManagement_name'), '/Az.HealthcareApis')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Automation/automationAccounts', parameters('automationAccounts_FabricCapacityManagement_name'))]"
+            ],
+            "properties": {
+                "contentLink": {}
+            }
+        },
+        {
+            "type": "Microsoft.Automation/automationAccounts/modules",
+            "apiVersion": "2023-11-01",
+            "name": "[concat(parameters('automationAccounts_FabricCapacityManagement_name'), '/Az.IotHub')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Automation/automationAccounts', parameters('automationAccounts_FabricCapacityManagement_name'))]"
+            ],
+            "properties": {
+                "contentLink": {}
+            }
+        },
+        {
+            "type": "Microsoft.Automation/automationAccounts/modules",
+            "apiVersion": "2023-11-01",
+            "name": "[concat(parameters('automationAccounts_FabricCapacityManagement_name'), '/Az.KeyVault')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Automation/automationAccounts', parameters('automationAccounts_FabricCapacityManagement_name'))]"
+            ],
+            "properties": {
+                "contentLink": {}
+            }
+        },
+        {
+            "type": "Microsoft.Automation/automationAccounts/modules",
+            "apiVersion": "2023-11-01",
+            "name": "[concat(parameters('automationAccounts_FabricCapacityManagement_name'), '/Az.Kusto')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Automation/automationAccounts', parameters('automationAccounts_FabricCapacityManagement_name'))]"
+            ],
+            "properties": {
+                "contentLink": {}
+            }
+        },
+        {
+            "type": "Microsoft.Automation/automationAccounts/modules",
+            "apiVersion": "2023-11-01",
+            "name": "[concat(parameters('automationAccounts_FabricCapacityManagement_name'), '/Az.LogicApp')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Automation/automationAccounts', parameters('automationAccounts_FabricCapacityManagement_name'))]"
+            ],
+            "properties": {
+                "contentLink": {}
+            }
+        },
+        {
+            "type": "Microsoft.Automation/automationAccounts/modules",
+            "apiVersion": "2023-11-01",
+            "name": "[concat(parameters('automationAccounts_FabricCapacityManagement_name'), '/Az.MachineLearning')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Automation/automationAccounts', parameters('automationAccounts_FabricCapacityManagement_name'))]"
+            ],
+            "properties": {
+                "contentLink": {}
+            }
+        },
+        {
+            "type": "Microsoft.Automation/automationAccounts/modules",
+            "apiVersion": "2023-11-01",
+            "name": "[concat(parameters('automationAccounts_FabricCapacityManagement_name'), '/Az.Maintenance')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Automation/automationAccounts', parameters('automationAccounts_FabricCapacityManagement_name'))]"
+            ],
+            "properties": {
+                "contentLink": {}
+            }
+        },
+        {
+            "type": "Microsoft.Automation/automationAccounts/modules",
+            "apiVersion": "2023-11-01",
+            "name": "[concat(parameters('automationAccounts_FabricCapacityManagement_name'), '/Az.ManagedServiceIdentity')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Automation/automationAccounts', parameters('automationAccounts_FabricCapacityManagement_name'))]"
+            ],
+            "properties": {
+                "contentLink": {}
+            }
+        },
+        {
+            "type": "Microsoft.Automation/automationAccounts/modules",
+            "apiVersion": "2023-11-01",
+            "name": "[concat(parameters('automationAccounts_FabricCapacityManagement_name'), '/Az.ManagedServices')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Automation/automationAccounts', parameters('automationAccounts_FabricCapacityManagement_name'))]"
+            ],
+            "properties": {
+                "contentLink": {}
+            }
+        },
+        {
+            "type": "Microsoft.Automation/automationAccounts/modules",
+            "apiVersion": "2023-11-01",
+            "name": "[concat(parameters('automationAccounts_FabricCapacityManagement_name'), '/Az.MarketplaceOrdering')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Automation/automationAccounts', parameters('automationAccounts_FabricCapacityManagement_name'))]"
+            ],
+            "properties": {
+                "contentLink": {}
+            }
+        },
+        {
+            "type": "Microsoft.Automation/automationAccounts/modules",
+            "apiVersion": "2023-11-01",
+            "name": "[concat(parameters('automationAccounts_FabricCapacityManagement_name'), '/Az.Media')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Automation/automationAccounts', parameters('automationAccounts_FabricCapacityManagement_name'))]"
+            ],
+            "properties": {
+                "contentLink": {}
+            }
+        },
+        {
+            "type": "Microsoft.Automation/automationAccounts/modules",
+            "apiVersion": "2023-11-01",
+            "name": "[concat(parameters('automationAccounts_FabricCapacityManagement_name'), '/Az.Migrate')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Automation/automationAccounts', parameters('automationAccounts_FabricCapacityManagement_name'))]"
+            ],
+            "properties": {
+                "contentLink": {}
+            }
+        },
+        {
+            "type": "Microsoft.Automation/automationAccounts/modules",
+            "apiVersion": "2023-11-01",
+            "name": "[concat(parameters('automationAccounts_FabricCapacityManagement_name'), '/Az.Monitor')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Automation/automationAccounts', parameters('automationAccounts_FabricCapacityManagement_name'))]"
+            ],
+            "properties": {
+                "contentLink": {}
+            }
+        },
+        {
+            "type": "Microsoft.Automation/automationAccounts/modules",
+            "apiVersion": "2023-11-01",
+            "name": "[concat(parameters('automationAccounts_FabricCapacityManagement_name'), '/Az.MySql')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Automation/automationAccounts', parameters('automationAccounts_FabricCapacityManagement_name'))]"
+            ],
+            "properties": {
+                "contentLink": {}
+            }
+        },
+        {
+            "type": "Microsoft.Automation/automationAccounts/modules",
+            "apiVersion": "2023-11-01",
+            "name": "[concat(parameters('automationAccounts_FabricCapacityManagement_name'), '/Az.Network')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Automation/automationAccounts', parameters('automationAccounts_FabricCapacityManagement_name'))]"
+            ],
+            "properties": {
+                "contentLink": {}
+            }
+        },
+        {
+            "type": "Microsoft.Automation/automationAccounts/modules",
+            "apiVersion": "2023-11-01",
+            "name": "[concat(parameters('automationAccounts_FabricCapacityManagement_name'), '/Az.NotificationHubs')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Automation/automationAccounts', parameters('automationAccounts_FabricCapacityManagement_name'))]"
+            ],
+            "properties": {
+                "contentLink": {}
+            }
+        },
+        {
+            "type": "Microsoft.Automation/automationAccounts/modules",
+            "apiVersion": "2023-11-01",
+            "name": "[concat(parameters('automationAccounts_FabricCapacityManagement_name'), '/Az.OperationalInsights')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Automation/automationAccounts', parameters('automationAccounts_FabricCapacityManagement_name'))]"
+            ],
+            "properties": {
+                "contentLink": {}
+            }
+        },
+        {
+            "type": "Microsoft.Automation/automationAccounts/modules",
+            "apiVersion": "2023-11-01",
+            "name": "[concat(parameters('automationAccounts_FabricCapacityManagement_name'), '/Az.PolicyInsights')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Automation/automationAccounts', parameters('automationAccounts_FabricCapacityManagement_name'))]"
+            ],
+            "properties": {
+                "contentLink": {}
+            }
+        },
+        {
+            "type": "Microsoft.Automation/automationAccounts/modules",
+            "apiVersion": "2023-11-01",
+            "name": "[concat(parameters('automationAccounts_FabricCapacityManagement_name'), '/Az.PostgreSql')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Automation/automationAccounts', parameters('automationAccounts_FabricCapacityManagement_name'))]"
+            ],
+            "properties": {
+                "contentLink": {}
+            }
+        },
+        {
+            "type": "Microsoft.Automation/automationAccounts/modules",
+            "apiVersion": "2023-11-01",
+            "name": "[concat(parameters('automationAccounts_FabricCapacityManagement_name'), '/Az.PowerBIEmbedded')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Automation/automationAccounts', parameters('automationAccounts_FabricCapacityManagement_name'))]"
+            ],
+            "properties": {
+                "contentLink": {}
+            }
+        },
+        {
+            "type": "Microsoft.Automation/automationAccounts/modules",
+            "apiVersion": "2023-11-01",
+            "name": "[concat(parameters('automationAccounts_FabricCapacityManagement_name'), '/Az.PrivateDns')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Automation/automationAccounts', parameters('automationAccounts_FabricCapacityManagement_name'))]"
+            ],
+            "properties": {
+                "contentLink": {}
+            }
+        },
+        {
+            "type": "Microsoft.Automation/automationAccounts/modules",
+            "apiVersion": "2023-11-01",
+            "name": "[concat(parameters('automationAccounts_FabricCapacityManagement_name'), '/Az.RecoveryServices')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Automation/automationAccounts', parameters('automationAccounts_FabricCapacityManagement_name'))]"
+            ],
+            "properties": {
+                "contentLink": {}
+            }
+        },
+        {
+            "type": "Microsoft.Automation/automationAccounts/modules",
+            "apiVersion": "2023-11-01",
+            "name": "[concat(parameters('automationAccounts_FabricCapacityManagement_name'), '/Az.RedisCache')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Automation/automationAccounts', parameters('automationAccounts_FabricCapacityManagement_name'))]"
+            ],
+            "properties": {
+                "contentLink": {}
+            }
+        },
+        {
+            "type": "Microsoft.Automation/automationAccounts/modules",
+            "apiVersion": "2023-11-01",
+            "name": "[concat(parameters('automationAccounts_FabricCapacityManagement_name'), '/Az.RedisEnterpriseCache')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Automation/automationAccounts', parameters('automationAccounts_FabricCapacityManagement_name'))]"
+            ],
+            "properties": {
+                "contentLink": {}
+            }
+        },
+        {
+            "type": "Microsoft.Automation/automationAccounts/modules",
+            "apiVersion": "2023-11-01",
+            "name": "[concat(parameters('automationAccounts_FabricCapacityManagement_name'), '/Az.Relay')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Automation/automationAccounts', parameters('automationAccounts_FabricCapacityManagement_name'))]"
+            ],
+            "properties": {
+                "contentLink": {}
+            }
+        },
+        {
+            "type": "Microsoft.Automation/automationAccounts/modules",
+            "apiVersion": "2023-11-01",
+            "name": "[concat(parameters('automationAccounts_FabricCapacityManagement_name'), '/Az.ResourceMover')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Automation/automationAccounts', parameters('automationAccounts_FabricCapacityManagement_name'))]"
+            ],
+            "properties": {
+                "contentLink": {}
+            }
+        },
+        {
+            "type": "Microsoft.Automation/automationAccounts/modules",
+            "apiVersion": "2023-11-01",
+            "name": "[concat(parameters('automationAccounts_FabricCapacityManagement_name'), '/Az.Resources')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Automation/automationAccounts', parameters('automationAccounts_FabricCapacityManagement_name'))]"
+            ],
+            "properties": {
+                "contentLink": {}
+            }
+        },
+        {
+            "type": "Microsoft.Automation/automationAccounts/modules",
+            "apiVersion": "2023-11-01",
+            "name": "[concat(parameters('automationAccounts_FabricCapacityManagement_name'), '/Az.Security')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Automation/automationAccounts', parameters('automationAccounts_FabricCapacityManagement_name'))]"
+            ],
+            "properties": {
+                "contentLink": {}
+            }
+        },
+        {
+            "type": "Microsoft.Automation/automationAccounts/modules",
+            "apiVersion": "2023-11-01",
+            "name": "[concat(parameters('automationAccounts_FabricCapacityManagement_name'), '/Az.SecurityInsights')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Automation/automationAccounts', parameters('automationAccounts_FabricCapacityManagement_name'))]"
+            ],
+            "properties": {
+                "contentLink": {}
+            }
+        },
+        {
+            "type": "Microsoft.Automation/automationAccounts/modules",
+            "apiVersion": "2023-11-01",
+            "name": "[concat(parameters('automationAccounts_FabricCapacityManagement_name'), '/Az.ServiceBus')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Automation/automationAccounts', parameters('automationAccounts_FabricCapacityManagement_name'))]"
+            ],
+            "properties": {
+                "contentLink": {}
+            }
+        },
+        {
+            "type": "Microsoft.Automation/automationAccounts/modules",
+            "apiVersion": "2023-11-01",
+            "name": "[concat(parameters('automationAccounts_FabricCapacityManagement_name'), '/Az.ServiceFabric')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Automation/automationAccounts', parameters('automationAccounts_FabricCapacityManagement_name'))]"
+            ],
+            "properties": {
+                "contentLink": {}
+            }
+        },
+        {
+            "type": "Microsoft.Automation/automationAccounts/modules",
+            "apiVersion": "2023-11-01",
+            "name": "[concat(parameters('automationAccounts_FabricCapacityManagement_name'), '/Az.SignalR')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Automation/automationAccounts', parameters('automationAccounts_FabricCapacityManagement_name'))]"
+            ],
+            "properties": {
+                "contentLink": {}
+            }
+        },
+        {
+            "type": "Microsoft.Automation/automationAccounts/modules",
+            "apiVersion": "2023-11-01",
+            "name": "[concat(parameters('automationAccounts_FabricCapacityManagement_name'), '/Az.Sql')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Automation/automationAccounts', parameters('automationAccounts_FabricCapacityManagement_name'))]"
+            ],
+            "properties": {
+                "contentLink": {}
+            }
+        },
+        {
+            "type": "Microsoft.Automation/automationAccounts/modules",
+            "apiVersion": "2023-11-01",
+            "name": "[concat(parameters('automationAccounts_FabricCapacityManagement_name'), '/Az.SqlVirtualMachine')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Automation/automationAccounts', parameters('automationAccounts_FabricCapacityManagement_name'))]"
+            ],
+            "properties": {
+                "contentLink": {}
+            }
+        },
+        {
+            "type": "Microsoft.Automation/automationAccounts/modules",
+            "apiVersion": "2023-11-01",
+            "name": "[concat(parameters('automationAccounts_FabricCapacityManagement_name'), '/Az.StackHCI')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Automation/automationAccounts', parameters('automationAccounts_FabricCapacityManagement_name'))]"
+            ],
+            "properties": {
+                "contentLink": {}
+            }
+        },
+        {
+            "type": "Microsoft.Automation/automationAccounts/modules",
+            "apiVersion": "2023-11-01",
+            "name": "[concat(parameters('automationAccounts_FabricCapacityManagement_name'), '/Az.Storage')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Automation/automationAccounts', parameters('automationAccounts_FabricCapacityManagement_name'))]"
+            ],
+            "properties": {
+                "contentLink": {}
+            }
+        },
+        {
+            "type": "Microsoft.Automation/automationAccounts/modules",
+            "apiVersion": "2023-11-01",
+            "name": "[concat(parameters('automationAccounts_FabricCapacityManagement_name'), '/Az.StorageSync')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Automation/automationAccounts', parameters('automationAccounts_FabricCapacityManagement_name'))]"
+            ],
+            "properties": {
+                "contentLink": {}
+            }
+        },
+        {
+            "type": "Microsoft.Automation/automationAccounts/modules",
+            "apiVersion": "2023-11-01",
+            "name": "[concat(parameters('automationAccounts_FabricCapacityManagement_name'), '/Az.StreamAnalytics')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Automation/automationAccounts', parameters('automationAccounts_FabricCapacityManagement_name'))]"
+            ],
+            "properties": {
+                "contentLink": {}
+            }
+        },
+        {
+            "type": "Microsoft.Automation/automationAccounts/modules",
+            "apiVersion": "2023-11-01",
+            "name": "[concat(parameters('automationAccounts_FabricCapacityManagement_name'), '/Az.Support')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Automation/automationAccounts', parameters('automationAccounts_FabricCapacityManagement_name'))]"
+            ],
+            "properties": {
+                "contentLink": {}
+            }
+        },
+        {
+            "type": "Microsoft.Automation/automationAccounts/modules",
+            "apiVersion": "2023-11-01",
+            "name": "[concat(parameters('automationAccounts_FabricCapacityManagement_name'), '/Az.Synapse')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Automation/automationAccounts', parameters('automationAccounts_FabricCapacityManagement_name'))]"
+            ],
+            "properties": {
+                "contentLink": {}
+            }
+        },
+        {
+            "type": "Microsoft.Automation/automationAccounts/modules",
+            "apiVersion": "2023-11-01",
+            "name": "[concat(parameters('automationAccounts_FabricCapacityManagement_name'), '/Az.TrafficManager')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Automation/automationAccounts', parameters('automationAccounts_FabricCapacityManagement_name'))]"
+            ],
+            "properties": {
+                "contentLink": {}
+            }
+        },
+        {
+            "type": "Microsoft.Automation/automationAccounts/modules",
+            "apiVersion": "2023-11-01",
+            "name": "[concat(parameters('automationAccounts_FabricCapacityManagement_name'), '/Az.Websites')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Automation/automationAccounts', parameters('automationAccounts_FabricCapacityManagement_name'))]"
+            ],
+            "properties": {
+                "contentLink": {}
+            }
+        },
+        {
+            "type": "Microsoft.Automation/automationAccounts/modules",
+            "apiVersion": "2023-11-01",
+            "name": "[concat(parameters('automationAccounts_FabricCapacityManagement_name'), '/Azure')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Automation/automationAccounts', parameters('automationAccounts_FabricCapacityManagement_name'))]"
+            ],
+            "properties": {
+                "contentLink": {}
+            }
+        },
+        {
+            "type": "Microsoft.Automation/automationAccounts/modules",
+            "apiVersion": "2023-11-01",
+            "name": "[concat(parameters('automationAccounts_FabricCapacityManagement_name'), '/Azure.Storage')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Automation/automationAccounts', parameters('automationAccounts_FabricCapacityManagement_name'))]"
+            ],
+            "properties": {
+                "contentLink": {}
+            }
+        },
+        {
+            "type": "Microsoft.Automation/automationAccounts/modules",
+            "apiVersion": "2023-11-01",
+            "name": "[concat(parameters('automationAccounts_FabricCapacityManagement_name'), '/AzureRM.Automation')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Automation/automationAccounts', parameters('automationAccounts_FabricCapacityManagement_name'))]"
+            ],
+            "properties": {
+                "contentLink": {}
+            }
+        },
+        {
+            "type": "Microsoft.Automation/automationAccounts/modules",
+            "apiVersion": "2023-11-01",
+            "name": "[concat(parameters('automationAccounts_FabricCapacityManagement_name'), '/AzureRM.Compute')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Automation/automationAccounts', parameters('automationAccounts_FabricCapacityManagement_name'))]"
+            ],
+            "properties": {
+                "contentLink": {}
+            }
+        },
+        {
+            "type": "Microsoft.Automation/automationAccounts/modules",
+            "apiVersion": "2023-11-01",
+            "name": "[concat(parameters('automationAccounts_FabricCapacityManagement_name'), '/AzureRM.Profile')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Automation/automationAccounts', parameters('automationAccounts_FabricCapacityManagement_name'))]"
+            ],
+            "properties": {
+                "contentLink": {}
+            }
+        },
+        {
+            "type": "Microsoft.Automation/automationAccounts/modules",
+            "apiVersion": "2023-11-01",
+            "name": "[concat(parameters('automationAccounts_FabricCapacityManagement_name'), '/AzureRM.Resources')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Automation/automationAccounts', parameters('automationAccounts_FabricCapacityManagement_name'))]"
+            ],
+            "properties": {
+                "contentLink": {}
+            }
+        },
+        {
+            "type": "Microsoft.Automation/automationAccounts/modules",
+            "apiVersion": "2023-11-01",
+            "name": "[concat(parameters('automationAccounts_FabricCapacityManagement_name'), '/AzureRM.Sql')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Automation/automationAccounts', parameters('automationAccounts_FabricCapacityManagement_name'))]"
+            ],
+            "properties": {
+                "contentLink": {}
+            }
+        },
+        {
+            "type": "Microsoft.Automation/automationAccounts/modules",
+            "apiVersion": "2023-11-01",
+            "name": "[concat(parameters('automationAccounts_FabricCapacityManagement_name'), '/AzureRM.Storage')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Automation/automationAccounts', parameters('automationAccounts_FabricCapacityManagement_name'))]"
+            ],
+            "properties": {
+                "contentLink": {}
+            }
+        },
+        {
+            "type": "Microsoft.Automation/automationAccounts/modules",
+            "apiVersion": "2023-11-01",
+            "name": "[concat(parameters('automationAccounts_FabricCapacityManagement_name'), '/ComputerManagementDsc')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Automation/automationAccounts', parameters('automationAccounts_FabricCapacityManagement_name'))]"
+            ],
+            "properties": {
+                "contentLink": {}
+            }
+        },
+        {
+            "type": "Microsoft.Automation/automationAccounts/modules",
+            "apiVersion": "2023-11-01",
+            "name": "[concat(parameters('automationAccounts_FabricCapacityManagement_name'), '/GPRegistryPolicyParser')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Automation/automationAccounts', parameters('automationAccounts_FabricCapacityManagement_name'))]"
+            ],
+            "properties": {
+                "contentLink": {}
+            }
+        },
+        {
+            "type": "Microsoft.Automation/automationAccounts/modules",
+            "apiVersion": "2023-11-01",
+            "name": "[concat(parameters('automationAccounts_FabricCapacityManagement_name'), '/Microsoft.PowerShell.Core')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Automation/automationAccounts', parameters('automationAccounts_FabricCapacityManagement_name'))]"
+            ],
+            "properties": {
+                "contentLink": {}
+            }
+        },
+        {
+            "type": "Microsoft.Automation/automationAccounts/modules",
+            "apiVersion": "2023-11-01",
+            "name": "[concat(parameters('automationAccounts_FabricCapacityManagement_name'), '/Microsoft.PowerShell.Diagnostics')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Automation/automationAccounts', parameters('automationAccounts_FabricCapacityManagement_name'))]"
+            ],
+            "properties": {
+                "contentLink": {}
+            }
+        },
+        {
+            "type": "Microsoft.Automation/automationAccounts/modules",
+            "apiVersion": "2023-11-01",
+            "name": "[concat(parameters('automationAccounts_FabricCapacityManagement_name'), '/Microsoft.PowerShell.Management')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Automation/automationAccounts', parameters('automationAccounts_FabricCapacityManagement_name'))]"
+            ],
+            "properties": {
+                "contentLink": {}
+            }
+        },
+        {
+            "type": "Microsoft.Automation/automationAccounts/modules",
+            "apiVersion": "2023-11-01",
+            "name": "[concat(parameters('automationAccounts_FabricCapacityManagement_name'), '/Microsoft.PowerShell.Security')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Automation/automationAccounts', parameters('automationAccounts_FabricCapacityManagement_name'))]"
+            ],
+            "properties": {
+                "contentLink": {}
+            }
+        },
+        {
+            "type": "Microsoft.Automation/automationAccounts/modules",
+            "apiVersion": "2023-11-01",
+            "name": "[concat(parameters('automationAccounts_FabricCapacityManagement_name'), '/Microsoft.PowerShell.Utility')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Automation/automationAccounts', parameters('automationAccounts_FabricCapacityManagement_name'))]"
+            ],
+            "properties": {
+                "contentLink": {}
+            }
+        },
+        {
+            "type": "Microsoft.Automation/automationAccounts/modules",
+            "apiVersion": "2023-11-01",
+            "name": "[concat(parameters('automationAccounts_FabricCapacityManagement_name'), '/Microsoft.WSMan.Management')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Automation/automationAccounts', parameters('automationAccounts_FabricCapacityManagement_name'))]"
+            ],
+            "properties": {
+                "contentLink": {}
+            }
+        },
+        {
+            "type": "Microsoft.Automation/automationAccounts/modules",
+            "apiVersion": "2023-11-01",
+            "name": "[concat(parameters('automationAccounts_FabricCapacityManagement_name'), '/Orchestrator.AssetManagement.Cmdlets')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Automation/automationAccounts', parameters('automationAccounts_FabricCapacityManagement_name'))]"
+            ],
+            "properties": {
+                "contentLink": {}
+            }
+        },
+        {
+            "type": "Microsoft.Automation/automationAccounts/modules",
+            "apiVersion": "2023-11-01",
+            "name": "[concat(parameters('automationAccounts_FabricCapacityManagement_name'), '/PSDscResources')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Automation/automationAccounts', parameters('automationAccounts_FabricCapacityManagement_name'))]"
+            ],
+            "properties": {
+                "contentLink": {}
+            }
+        },
+        {
+            "type": "Microsoft.Automation/automationAccounts/modules",
+            "apiVersion": "2023-11-01",
+            "name": "[concat(parameters('automationAccounts_FabricCapacityManagement_name'), '/SecurityPolicyDsc')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Automation/automationAccounts', parameters('automationAccounts_FabricCapacityManagement_name'))]"
+            ],
+            "properties": {
+                "contentLink": {}
+            }
+        },
+        {
+            "type": "Microsoft.Automation/automationAccounts/modules",
+            "apiVersion": "2023-11-01",
+            "name": "[concat(parameters('automationAccounts_FabricCapacityManagement_name'), '/StateConfigCompositeResources')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Automation/automationAccounts', parameters('automationAccounts_FabricCapacityManagement_name'))]"
+            ],
+            "properties": {
+                "contentLink": {}
+            }
+        },
+        {
+            "type": "Microsoft.Automation/automationAccounts/modules",
+            "apiVersion": "2023-11-01",
+            "name": "[concat(parameters('automationAccounts_FabricCapacityManagement_name'), '/xDSCDomainjoin')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Automation/automationAccounts', parameters('automationAccounts_FabricCapacityManagement_name'))]"
+            ],
+            "properties": {
+                "contentLink": {}
+            }
+        },
+        {
+            "type": "Microsoft.Automation/automationAccounts/modules",
+            "apiVersion": "2023-11-01",
+            "name": "[concat(parameters('automationAccounts_FabricCapacityManagement_name'), '/xPowerShellExecutionPolicy')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Automation/automationAccounts', parameters('automationAccounts_FabricCapacityManagement_name'))]"
+            ],
+            "properties": {
+                "contentLink": {}
+            }
+        },
+        {
+            "type": "Microsoft.Automation/automationAccounts/modules",
+            "apiVersion": "2023-11-01",
+            "name": "[concat(parameters('automationAccounts_FabricCapacityManagement_name'), '/xRemoteDesktopAdmin')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Automation/automationAccounts', parameters('automationAccounts_FabricCapacityManagement_name'))]"
+            ],
+            "properties": {
+                "contentLink": {}
+            }
+        },
+        {
+            "type": "Microsoft.Automation/automationAccounts/powerShell72Modules",
+            "apiVersion": "2023-11-01",
+            "name": "[concat(parameters('automationAccounts_FabricCapacityManagement_name'), '/Az')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Automation/automationAccounts', parameters('automationAccounts_FabricCapacityManagement_name'))]"
+            ],
+            "properties": {
+                "contentLink": {}
+            }
+        },
+        {
+            "type": "Microsoft.Automation/automationAccounts/powerShell72Modules",
+            "apiVersion": "2023-11-01",
+            "name": "[concat(parameters('automationAccounts_FabricCapacityManagement_name'), '/Az.Accounts')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Automation/automationAccounts', parameters('automationAccounts_FabricCapacityManagement_name'))]"
+            ],
+            "properties": {
+                "contentLink": {}
+            }
+        },
+        {
+            "type": "Microsoft.Automation/automationAccounts/powerShell72Modules",
+            "apiVersion": "2023-11-01",
+            "name": "[concat(parameters('automationAccounts_FabricCapacityManagement_name'), '/Az.Advisor')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Automation/automationAccounts', parameters('automationAccounts_FabricCapacityManagement_name'))]"
+            ],
+            "properties": {
+                "contentLink": {}
+            }
+        },
+        {
+            "type": "Microsoft.Automation/automationAccounts/powerShell72Modules",
+            "apiVersion": "2023-11-01",
+            "name": "[concat(parameters('automationAccounts_FabricCapacityManagement_name'), '/Az.Aks')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Automation/automationAccounts', parameters('automationAccounts_FabricCapacityManagement_name'))]"
+            ],
+            "properties": {
+                "contentLink": {}
+            }
+        },
+        {
+            "type": "Microsoft.Automation/automationAccounts/powerShell72Modules",
+            "apiVersion": "2023-11-01",
+            "name": "[concat(parameters('automationAccounts_FabricCapacityManagement_name'), '/Az.AnalysisServices')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Automation/automationAccounts', parameters('automationAccounts_FabricCapacityManagement_name'))]"
+            ],
+            "properties": {
+                "contentLink": {}
+            }
+        },
+        {
+            "type": "Microsoft.Automation/automationAccounts/powerShell72Modules",
+            "apiVersion": "2023-11-01",
+            "name": "[concat(parameters('automationAccounts_FabricCapacityManagement_name'), '/Az.ApiManagement')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Automation/automationAccounts', parameters('automationAccounts_FabricCapacityManagement_name'))]"
+            ],
+            "properties": {
+                "contentLink": {}
+            }
+        },
+        {
+            "type": "Microsoft.Automation/automationAccounts/powerShell72Modules",
+            "apiVersion": "2023-11-01",
+            "name": "[concat(parameters('automationAccounts_FabricCapacityManagement_name'), '/Az.App')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Automation/automationAccounts', parameters('automationAccounts_FabricCapacityManagement_name'))]"
+            ],
+            "properties": {
+                "contentLink": {}
+            }
+        },
+        {
+            "type": "Microsoft.Automation/automationAccounts/powerShell72Modules",
+            "apiVersion": "2023-11-01",
+            "name": "[concat(parameters('automationAccounts_FabricCapacityManagement_name'), '/Az.AppConfiguration')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Automation/automationAccounts', parameters('automationAccounts_FabricCapacityManagement_name'))]"
+            ],
+            "properties": {
+                "contentLink": {}
+            }
+        },
+        {
+            "type": "Microsoft.Automation/automationAccounts/powerShell72Modules",
+            "apiVersion": "2023-11-01",
+            "name": "[concat(parameters('automationAccounts_FabricCapacityManagement_name'), '/Az.ApplicationInsights')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Automation/automationAccounts', parameters('automationAccounts_FabricCapacityManagement_name'))]"
+            ],
+            "properties": {
+                "contentLink": {}
+            }
+        },
+        {
+            "type": "Microsoft.Automation/automationAccounts/powerShell72Modules",
+            "apiVersion": "2023-11-01",
+            "name": "[concat(parameters('automationAccounts_FabricCapacityManagement_name'), '/Az.ArcResourceBridge')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Automation/automationAccounts', parameters('automationAccounts_FabricCapacityManagement_name'))]"
+            ],
+            "properties": {
+                "contentLink": {}
+            }
+        },
+        {
+            "type": "Microsoft.Automation/automationAccounts/powerShell72Modules",
+            "apiVersion": "2023-11-01",
+            "name": "[concat(parameters('automationAccounts_FabricCapacityManagement_name'), '/Az.Attestation')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Automation/automationAccounts', parameters('automationAccounts_FabricCapacityManagement_name'))]"
+            ],
+            "properties": {
+                "contentLink": {}
+            }
+        },
+        {
+            "type": "Microsoft.Automation/automationAccounts/powerShell72Modules",
+            "apiVersion": "2023-11-01",
+            "name": "[concat(parameters('automationAccounts_FabricCapacityManagement_name'), '/Az.Automanage')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Automation/automationAccounts', parameters('automationAccounts_FabricCapacityManagement_name'))]"
+            ],
+            "properties": {
+                "contentLink": {}
+            }
+        },
+        {
+            "type": "Microsoft.Automation/automationAccounts/powerShell72Modules",
+            "apiVersion": "2023-11-01",
+            "name": "[concat(parameters('automationAccounts_FabricCapacityManagement_name'), '/Az.Automation')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Automation/automationAccounts', parameters('automationAccounts_FabricCapacityManagement_name'))]"
+            ],
+            "properties": {
+                "contentLink": {}
+            }
+        },
+        {
+            "type": "Microsoft.Automation/automationAccounts/powerShell72Modules",
+            "apiVersion": "2023-11-01",
+            "name": "[concat(parameters('automationAccounts_FabricCapacityManagement_name'), '/Az.Batch')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Automation/automationAccounts', parameters('automationAccounts_FabricCapacityManagement_name'))]"
+            ],
+            "properties": {
+                "contentLink": {}
+            }
+        },
+        {
+            "type": "Microsoft.Automation/automationAccounts/powerShell72Modules",
+            "apiVersion": "2023-11-01",
+            "name": "[concat(parameters('automationAccounts_FabricCapacityManagement_name'), '/Az.Billing')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Automation/automationAccounts', parameters('automationAccounts_FabricCapacityManagement_name'))]"
+            ],
+            "properties": {
+                "contentLink": {}
+            }
+        },
+        {
+            "type": "Microsoft.Automation/automationAccounts/powerShell72Modules",
+            "apiVersion": "2023-11-01",
+            "name": "[concat(parameters('automationAccounts_FabricCapacityManagement_name'), '/Az.Cdn')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Automation/automationAccounts', parameters('automationAccounts_FabricCapacityManagement_name'))]"
+            ],
+            "properties": {
+                "contentLink": {}
+            }
+        },
+        {
+            "type": "Microsoft.Automation/automationAccounts/powerShell72Modules",
+            "apiVersion": "2023-11-01",
+            "name": "[concat(parameters('automationAccounts_FabricCapacityManagement_name'), '/Az.CloudService')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Automation/automationAccounts', parameters('automationAccounts_FabricCapacityManagement_name'))]"
+            ],
+            "properties": {
+                "contentLink": {}
+            }
+        },
+        {
+            "type": "Microsoft.Automation/automationAccounts/powerShell72Modules",
+            "apiVersion": "2023-11-01",
+            "name": "[concat(parameters('automationAccounts_FabricCapacityManagement_name'), '/Az.CognitiveServices')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Automation/automationAccounts', parameters('automationAccounts_FabricCapacityManagement_name'))]"
+            ],
+            "properties": {
+                "contentLink": {}
+            }
+        },
+        {
+            "type": "Microsoft.Automation/automationAccounts/powerShell72Modules",
+            "apiVersion": "2023-11-01",
+            "name": "[concat(parameters('automationAccounts_FabricCapacityManagement_name'), '/Az.Compute')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Automation/automationAccounts', parameters('automationAccounts_FabricCapacityManagement_name'))]"
+            ],
+            "properties": {
+                "contentLink": {}
+            }
+        },
+        {
+            "type": "Microsoft.Automation/automationAccounts/powerShell72Modules",
+            "apiVersion": "2023-11-01",
+            "name": "[concat(parameters('automationAccounts_FabricCapacityManagement_name'), '/Az.ConfidentialLedger')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Automation/automationAccounts', parameters('automationAccounts_FabricCapacityManagement_name'))]"
+            ],
+            "properties": {
+                "contentLink": {}
+            }
+        },
+        {
+            "type": "Microsoft.Automation/automationAccounts/powerShell72Modules",
+            "apiVersion": "2023-11-01",
+            "name": "[concat(parameters('automationAccounts_FabricCapacityManagement_name'), '/Az.ContainerInstance')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Automation/automationAccounts', parameters('automationAccounts_FabricCapacityManagement_name'))]"
+            ],
+            "properties": {
+                "contentLink": {}
+            }
+        },
+        {
+            "type": "Microsoft.Automation/automationAccounts/powerShell72Modules",
+            "apiVersion": "2023-11-01",
+            "name": "[concat(parameters('automationAccounts_FabricCapacityManagement_name'), '/Az.ContainerRegistry')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Automation/automationAccounts', parameters('automationAccounts_FabricCapacityManagement_name'))]"
+            ],
+            "properties": {
+                "contentLink": {}
+            }
+        },
+        {
+            "type": "Microsoft.Automation/automationAccounts/powerShell72Modules",
+            "apiVersion": "2023-11-01",
+            "name": "[concat(parameters('automationAccounts_FabricCapacityManagement_name'), '/Az.CosmosDB')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Automation/automationAccounts', parameters('automationAccounts_FabricCapacityManagement_name'))]"
+            ],
+            "properties": {
+                "contentLink": {}
+            }
+        },
+        {
+            "type": "Microsoft.Automation/automationAccounts/powerShell72Modules",
+            "apiVersion": "2023-11-01",
+            "name": "[concat(parameters('automationAccounts_FabricCapacityManagement_name'), '/Az.DataBoxEdge')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Automation/automationAccounts', parameters('automationAccounts_FabricCapacityManagement_name'))]"
+            ],
+            "properties": {
+                "contentLink": {}
+            }
+        },
+        {
+            "type": "Microsoft.Automation/automationAccounts/powerShell72Modules",
+            "apiVersion": "2023-11-01",
+            "name": "[concat(parameters('automationAccounts_FabricCapacityManagement_name'), '/Az.Databricks')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Automation/automationAccounts', parameters('automationAccounts_FabricCapacityManagement_name'))]"
+            ],
+            "properties": {
+                "contentLink": {}
+            }
+        },
+        {
+            "type": "Microsoft.Automation/automationAccounts/powerShell72Modules",
+            "apiVersion": "2023-11-01",
+            "name": "[concat(parameters('automationAccounts_FabricCapacityManagement_name'), '/Az.DataFactory')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Automation/automationAccounts', parameters('automationAccounts_FabricCapacityManagement_name'))]"
+            ],
+            "properties": {
+                "contentLink": {}
+            }
+        },
+        {
+            "type": "Microsoft.Automation/automationAccounts/powerShell72Modules",
+            "apiVersion": "2023-11-01",
+            "name": "[concat(parameters('automationAccounts_FabricCapacityManagement_name'), '/Az.DataLakeAnalytics')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Automation/automationAccounts', parameters('automationAccounts_FabricCapacityManagement_name'))]"
+            ],
+            "properties": {
+                "contentLink": {}
+            }
+        },
+        {
+            "type": "Microsoft.Automation/automationAccounts/powerShell72Modules",
+            "apiVersion": "2023-11-01",
+            "name": "[concat(parameters('automationAccounts_FabricCapacityManagement_name'), '/Az.DataLakeStore')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Automation/automationAccounts', parameters('automationAccounts_FabricCapacityManagement_name'))]"
+            ],
+            "properties": {
+                "contentLink": {}
+            }
+        },
+        {
+            "type": "Microsoft.Automation/automationAccounts/powerShell72Modules",
+            "apiVersion": "2023-11-01",
+            "name": "[concat(parameters('automationAccounts_FabricCapacityManagement_name'), '/Az.DataProtection')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Automation/automationAccounts', parameters('automationAccounts_FabricCapacityManagement_name'))]"
+            ],
+            "properties": {
+                "contentLink": {}
+            }
+        },
+        {
+            "type": "Microsoft.Automation/automationAccounts/powerShell72Modules",
+            "apiVersion": "2023-11-01",
+            "name": "[concat(parameters('automationAccounts_FabricCapacityManagement_name'), '/Az.DataShare')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Automation/automationAccounts', parameters('automationAccounts_FabricCapacityManagement_name'))]"
+            ],
+            "properties": {
+                "contentLink": {}
+            }
+        },
+        {
+            "type": "Microsoft.Automation/automationAccounts/powerShell72Modules",
+            "apiVersion": "2023-11-01",
+            "name": "[concat(parameters('automationAccounts_FabricCapacityManagement_name'), '/Az.DeploymentManager')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Automation/automationAccounts', parameters('automationAccounts_FabricCapacityManagement_name'))]"
+            ],
+            "properties": {
+                "contentLink": {}
+            }
+        },
+        {
+            "type": "Microsoft.Automation/automationAccounts/powerShell72Modules",
+            "apiVersion": "2023-11-01",
+            "name": "[concat(parameters('automationAccounts_FabricCapacityManagement_name'), '/Az.DesktopVirtualization')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Automation/automationAccounts', parameters('automationAccounts_FabricCapacityManagement_name'))]"
+            ],
+            "properties": {
+                "contentLink": {}
+            }
+        },
+        {
+            "type": "Microsoft.Automation/automationAccounts/powerShell72Modules",
+            "apiVersion": "2023-11-01",
+            "name": "[concat(parameters('automationAccounts_FabricCapacityManagement_name'), '/Az.DevCenter')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Automation/automationAccounts', parameters('automationAccounts_FabricCapacityManagement_name'))]"
+            ],
+            "properties": {
+                "contentLink": {}
+            }
+        },
+        {
+            "type": "Microsoft.Automation/automationAccounts/powerShell72Modules",
+            "apiVersion": "2023-11-01",
+            "name": "[concat(parameters('automationAccounts_FabricCapacityManagement_name'), '/Az.DevTestLabs')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Automation/automationAccounts', parameters('automationAccounts_FabricCapacityManagement_name'))]"
+            ],
+            "properties": {
+                "contentLink": {}
+            }
+        },
+        {
+            "type": "Microsoft.Automation/automationAccounts/powerShell72Modules",
+            "apiVersion": "2023-11-01",
+            "name": "[concat(parameters('automationAccounts_FabricCapacityManagement_name'), '/Az.Dns')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Automation/automationAccounts', parameters('automationAccounts_FabricCapacityManagement_name'))]"
+            ],
+            "properties": {
+                "contentLink": {}
+            }
+        },
+        {
+            "type": "Microsoft.Automation/automationAccounts/powerShell72Modules",
+            "apiVersion": "2023-11-01",
+            "name": "[concat(parameters('automationAccounts_FabricCapacityManagement_name'), '/Az.EventGrid')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Automation/automationAccounts', parameters('automationAccounts_FabricCapacityManagement_name'))]"
+            ],
+            "properties": {
+                "contentLink": {}
+            }
+        },
+        {
+            "type": "Microsoft.Automation/automationAccounts/powerShell72Modules",
+            "apiVersion": "2023-11-01",
+            "name": "[concat(parameters('automationAccounts_FabricCapacityManagement_name'), '/Az.EventHub')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Automation/automationAccounts', parameters('automationAccounts_FabricCapacityManagement_name'))]"
+            ],
+            "properties": {
+                "contentLink": {}
+            }
+        },
+        {
+            "type": "Microsoft.Automation/automationAccounts/powerShell72Modules",
+            "apiVersion": "2023-11-01",
+            "name": "[concat(parameters('automationAccounts_FabricCapacityManagement_name'), '/Az.FrontDoor')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Automation/automationAccounts', parameters('automationAccounts_FabricCapacityManagement_name'))]"
+            ],
+            "properties": {
+                "contentLink": {}
+            }
+        },
+        {
+            "type": "Microsoft.Automation/automationAccounts/powerShell72Modules",
+            "apiVersion": "2023-11-01",
+            "name": "[concat(parameters('automationAccounts_FabricCapacityManagement_name'), '/Az.Functions')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Automation/automationAccounts', parameters('automationAccounts_FabricCapacityManagement_name'))]"
+            ],
+            "properties": {
+                "contentLink": {}
+            }
+        },
+        {
+            "type": "Microsoft.Automation/automationAccounts/powerShell72Modules",
+            "apiVersion": "2023-11-01",
+            "name": "[concat(parameters('automationAccounts_FabricCapacityManagement_name'), '/Az.HDInsight')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Automation/automationAccounts', parameters('automationAccounts_FabricCapacityManagement_name'))]"
+            ],
+            "properties": {
+                "contentLink": {}
+            }
+        },
+        {
+            "type": "Microsoft.Automation/automationAccounts/powerShell72Modules",
+            "apiVersion": "2023-11-01",
+            "name": "[concat(parameters('automationAccounts_FabricCapacityManagement_name'), '/Az.HealthcareApis')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Automation/automationAccounts', parameters('automationAccounts_FabricCapacityManagement_name'))]"
+            ],
+            "properties": {
+                "contentLink": {}
+            }
+        },
+        {
+            "type": "Microsoft.Automation/automationAccounts/powerShell72Modules",
+            "apiVersion": "2023-11-01",
+            "name": "[concat(parameters('automationAccounts_FabricCapacityManagement_name'), '/Az.IotHub')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Automation/automationAccounts', parameters('automationAccounts_FabricCapacityManagement_name'))]"
+            ],
+            "properties": {
+                "contentLink": {}
+            }
+        },
+        {
+            "type": "Microsoft.Automation/automationAccounts/powerShell72Modules",
+            "apiVersion": "2023-11-01",
+            "name": "[concat(parameters('automationAccounts_FabricCapacityManagement_name'), '/Az.KeyVault')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Automation/automationAccounts', parameters('automationAccounts_FabricCapacityManagement_name'))]"
+            ],
+            "properties": {
+                "contentLink": {}
+            }
+        },
+        {
+            "type": "Microsoft.Automation/automationAccounts/powerShell72Modules",
+            "apiVersion": "2023-11-01",
+            "name": "[concat(parameters('automationAccounts_FabricCapacityManagement_name'), '/Az.Kusto')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Automation/automationAccounts', parameters('automationAccounts_FabricCapacityManagement_name'))]"
+            ],
+            "properties": {
+                "contentLink": {}
+            }
+        },
+        {
+            "type": "Microsoft.Automation/automationAccounts/powerShell72Modules",
+            "apiVersion": "2023-11-01",
+            "name": "[concat(parameters('automationAccounts_FabricCapacityManagement_name'), '/Az.LoadTesting')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Automation/automationAccounts', parameters('automationAccounts_FabricCapacityManagement_name'))]"
+            ],
+            "properties": {
+                "contentLink": {}
+            }
+        },
+        {
+            "type": "Microsoft.Automation/automationAccounts/powerShell72Modules",
+            "apiVersion": "2023-11-01",
+            "name": "[concat(parameters('automationAccounts_FabricCapacityManagement_name'), '/Az.LogicApp')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Automation/automationAccounts', parameters('automationAccounts_FabricCapacityManagement_name'))]"
+            ],
+            "properties": {
+                "contentLink": {}
+            }
+        },
+        {
+            "type": "Microsoft.Automation/automationAccounts/powerShell72Modules",
+            "apiVersion": "2023-11-01",
+            "name": "[concat(parameters('automationAccounts_FabricCapacityManagement_name'), '/Az.MachineLearning')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Automation/automationAccounts', parameters('automationAccounts_FabricCapacityManagement_name'))]"
+            ],
+            "properties": {
+                "contentLink": {}
+            }
+        },
+        {
+            "type": "Microsoft.Automation/automationAccounts/powerShell72Modules",
+            "apiVersion": "2023-11-01",
+            "name": "[concat(parameters('automationAccounts_FabricCapacityManagement_name'), '/Az.MachineLearningServices')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Automation/automationAccounts', parameters('automationAccounts_FabricCapacityManagement_name'))]"
+            ],
+            "properties": {
+                "contentLink": {}
+            }
+        },
+        {
+            "type": "Microsoft.Automation/automationAccounts/powerShell72Modules",
+            "apiVersion": "2023-11-01",
+            "name": "[concat(parameters('automationAccounts_FabricCapacityManagement_name'), '/Az.Maintenance')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Automation/automationAccounts', parameters('automationAccounts_FabricCapacityManagement_name'))]"
+            ],
+            "properties": {
+                "contentLink": {}
+            }
+        },
+        {
+            "type": "Microsoft.Automation/automationAccounts/powerShell72Modules",
+            "apiVersion": "2023-11-01",
+            "name": "[concat(parameters('automationAccounts_FabricCapacityManagement_name'), '/Az.ManagedServiceIdentity')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Automation/automationAccounts', parameters('automationAccounts_FabricCapacityManagement_name'))]"
+            ],
+            "properties": {
+                "contentLink": {}
+            }
+        },
+        {
+            "type": "Microsoft.Automation/automationAccounts/powerShell72Modules",
+            "apiVersion": "2023-11-01",
+            "name": "[concat(parameters('automationAccounts_FabricCapacityManagement_name'), '/Az.ManagedServices')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Automation/automationAccounts', parameters('automationAccounts_FabricCapacityManagement_name'))]"
+            ],
+            "properties": {
+                "contentLink": {}
+            }
+        },
+        {
+            "type": "Microsoft.Automation/automationAccounts/powerShell72Modules",
+            "apiVersion": "2023-11-01",
+            "name": "[concat(parameters('automationAccounts_FabricCapacityManagement_name'), '/Az.MarketplaceOrdering')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Automation/automationAccounts', parameters('automationAccounts_FabricCapacityManagement_name'))]"
+            ],
+            "properties": {
+                "contentLink": {}
+            }
+        },
+        {
+            "type": "Microsoft.Automation/automationAccounts/powerShell72Modules",
+            "apiVersion": "2023-11-01",
+            "name": "[concat(parameters('automationAccounts_FabricCapacityManagement_name'), '/Az.Media')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Automation/automationAccounts', parameters('automationAccounts_FabricCapacityManagement_name'))]"
+            ],
+            "properties": {
+                "contentLink": {}
+            }
+        },
+        {
+            "type": "Microsoft.Automation/automationAccounts/powerShell72Modules",
+            "apiVersion": "2023-11-01",
+            "name": "[concat(parameters('automationAccounts_FabricCapacityManagement_name'), '/Az.Migrate')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Automation/automationAccounts', parameters('automationAccounts_FabricCapacityManagement_name'))]"
+            ],
+            "properties": {
+                "contentLink": {}
+            }
+        },
+        {
+            "type": "Microsoft.Automation/automationAccounts/powerShell72Modules",
+            "apiVersion": "2023-11-01",
+            "name": "[concat(parameters('automationAccounts_FabricCapacityManagement_name'), '/Az.Monitor')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Automation/automationAccounts', parameters('automationAccounts_FabricCapacityManagement_name'))]"
+            ],
+            "properties": {
+                "contentLink": {}
+            }
+        },
+        {
+            "type": "Microsoft.Automation/automationAccounts/powerShell72Modules",
+            "apiVersion": "2023-11-01",
+            "name": "[concat(parameters('automationAccounts_FabricCapacityManagement_name'), '/Az.MySql')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Automation/automationAccounts', parameters('automationAccounts_FabricCapacityManagement_name'))]"
+            ],
+            "properties": {
+                "contentLink": {}
+            }
+        },
+        {
+            "type": "Microsoft.Automation/automationAccounts/powerShell72Modules",
+            "apiVersion": "2023-11-01",
+            "name": "[concat(parameters('automationAccounts_FabricCapacityManagement_name'), '/Az.Network')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Automation/automationAccounts', parameters('automationAccounts_FabricCapacityManagement_name'))]"
+            ],
+            "properties": {
+                "contentLink": {}
+            }
+        },
+        {
+            "type": "Microsoft.Automation/automationAccounts/powerShell72Modules",
+            "apiVersion": "2023-11-01",
+            "name": "[concat(parameters('automationAccounts_FabricCapacityManagement_name'), '/Az.NetworkCloud')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Automation/automationAccounts', parameters('automationAccounts_FabricCapacityManagement_name'))]"
+            ],
+            "properties": {
+                "contentLink": {}
+            }
+        },
+        {
+            "type": "Microsoft.Automation/automationAccounts/powerShell72Modules",
+            "apiVersion": "2023-11-01",
+            "name": "[concat(parameters('automationAccounts_FabricCapacityManagement_name'), '/Az.NotificationHubs')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Automation/automationAccounts', parameters('automationAccounts_FabricCapacityManagement_name'))]"
+            ],
+            "properties": {
+                "contentLink": {}
+            }
+        },
+        {
+            "type": "Microsoft.Automation/automationAccounts/powerShell72Modules",
+            "apiVersion": "2023-11-01",
+            "name": "[concat(parameters('automationAccounts_FabricCapacityManagement_name'), '/Az.OperationalInsights')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Automation/automationAccounts', parameters('automationAccounts_FabricCapacityManagement_name'))]"
+            ],
+            "properties": {
+                "contentLink": {}
+            }
+        },
+        {
+            "type": "Microsoft.Automation/automationAccounts/powerShell72Modules",
+            "apiVersion": "2023-11-01",
+            "name": "[concat(parameters('automationAccounts_FabricCapacityManagement_name'), '/Az.PolicyInsights')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Automation/automationAccounts', parameters('automationAccounts_FabricCapacityManagement_name'))]"
+            ],
+            "properties": {
+                "contentLink": {}
+            }
+        },
+        {
+            "type": "Microsoft.Automation/automationAccounts/powerShell72Modules",
+            "apiVersion": "2023-11-01",
+            "name": "[concat(parameters('automationAccounts_FabricCapacityManagement_name'), '/Az.PostgreSql')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Automation/automationAccounts', parameters('automationAccounts_FabricCapacityManagement_name'))]"
+            ],
+            "properties": {
+                "contentLink": {}
+            }
+        },
+        {
+            "type": "Microsoft.Automation/automationAccounts/powerShell72Modules",
+            "apiVersion": "2023-11-01",
+            "name": "[concat(parameters('automationAccounts_FabricCapacityManagement_name'), '/Az.PowerBIEmbedded')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Automation/automationAccounts', parameters('automationAccounts_FabricCapacityManagement_name'))]"
+            ],
+            "properties": {
+                "contentLink": {}
+            }
+        },
+        {
+            "type": "Microsoft.Automation/automationAccounts/powerShell72Modules",
+            "apiVersion": "2023-11-01",
+            "name": "[concat(parameters('automationAccounts_FabricCapacityManagement_name'), '/Az.PrivateDns')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Automation/automationAccounts', parameters('automationAccounts_FabricCapacityManagement_name'))]"
+            ],
+            "properties": {
+                "contentLink": {}
+            }
+        },
+        {
+            "type": "Microsoft.Automation/automationAccounts/powerShell72Modules",
+            "apiVersion": "2023-11-01",
+            "name": "[concat(parameters('automationAccounts_FabricCapacityManagement_name'), '/Az.RecoveryServices')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Automation/automationAccounts', parameters('automationAccounts_FabricCapacityManagement_name'))]"
+            ],
+            "properties": {
+                "contentLink": {}
+            }
+        },
+        {
+            "type": "Microsoft.Automation/automationAccounts/powerShell72Modules",
+            "apiVersion": "2023-11-01",
+            "name": "[concat(parameters('automationAccounts_FabricCapacityManagement_name'), '/Az.RedisCache')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Automation/automationAccounts', parameters('automationAccounts_FabricCapacityManagement_name'))]"
+            ],
+            "properties": {
+                "contentLink": {}
+            }
+        },
+        {
+            "type": "Microsoft.Automation/automationAccounts/powerShell72Modules",
+            "apiVersion": "2023-11-01",
+            "name": "[concat(parameters('automationAccounts_FabricCapacityManagement_name'), '/Az.RedisEnterpriseCache')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Automation/automationAccounts', parameters('automationAccounts_FabricCapacityManagement_name'))]"
+            ],
+            "properties": {
+                "contentLink": {}
+            }
+        },
+        {
+            "type": "Microsoft.Automation/automationAccounts/powerShell72Modules",
+            "apiVersion": "2023-11-01",
+            "name": "[concat(parameters('automationAccounts_FabricCapacityManagement_name'), '/Az.Relay')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Automation/automationAccounts', parameters('automationAccounts_FabricCapacityManagement_name'))]"
+            ],
+            "properties": {
+                "contentLink": {}
+            }
+        },
+        {
+            "type": "Microsoft.Automation/automationAccounts/powerShell72Modules",
+            "apiVersion": "2023-11-01",
+            "name": "[concat(parameters('automationAccounts_FabricCapacityManagement_name'), '/Az.ResourceMover')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Automation/automationAccounts', parameters('automationAccounts_FabricCapacityManagement_name'))]"
+            ],
+            "properties": {
+                "contentLink": {}
+            }
+        },
+        {
+            "type": "Microsoft.Automation/automationAccounts/powerShell72Modules",
+            "apiVersion": "2023-11-01",
+            "name": "[concat(parameters('automationAccounts_FabricCapacityManagement_name'), '/Az.Resources')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Automation/automationAccounts', parameters('automationAccounts_FabricCapacityManagement_name'))]"
+            ],
+            "properties": {
+                "contentLink": {}
+            }
+        },
+        {
+            "type": "Microsoft.Automation/automationAccounts/powerShell72Modules",
+            "apiVersion": "2023-11-01",
+            "name": "[concat(parameters('automationAccounts_FabricCapacityManagement_name'), '/Az.Security')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Automation/automationAccounts', parameters('automationAccounts_FabricCapacityManagement_name'))]"
+            ],
+            "properties": {
+                "contentLink": {}
+            }
+        },
+        {
+            "type": "Microsoft.Automation/automationAccounts/powerShell72Modules",
+            "apiVersion": "2023-11-01",
+            "name": "[concat(parameters('automationAccounts_FabricCapacityManagement_name'), '/Az.SecurityInsights')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Automation/automationAccounts', parameters('automationAccounts_FabricCapacityManagement_name'))]"
+            ],
+            "properties": {
+                "contentLink": {}
+            }
+        },
+        {
+            "type": "Microsoft.Automation/automationAccounts/powerShell72Modules",
+            "apiVersion": "2023-11-01",
+            "name": "[concat(parameters('automationAccounts_FabricCapacityManagement_name'), '/Az.ServiceBus')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Automation/automationAccounts', parameters('automationAccounts_FabricCapacityManagement_name'))]"
+            ],
+            "properties": {
+                "contentLink": {}
+            }
+        },
+        {
+            "type": "Microsoft.Automation/automationAccounts/powerShell72Modules",
+            "apiVersion": "2023-11-01",
+            "name": "[concat(parameters('automationAccounts_FabricCapacityManagement_name'), '/Az.ServiceFabric')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Automation/automationAccounts', parameters('automationAccounts_FabricCapacityManagement_name'))]"
+            ],
+            "properties": {
+                "contentLink": {}
+            }
+        },
+        {
+            "type": "Microsoft.Automation/automationAccounts/powerShell72Modules",
+            "apiVersion": "2023-11-01",
+            "name": "[concat(parameters('automationAccounts_FabricCapacityManagement_name'), '/Az.SignalR')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Automation/automationAccounts', parameters('automationAccounts_FabricCapacityManagement_name'))]"
+            ],
+            "properties": {
+                "contentLink": {}
+            }
+        },
+        {
+            "type": "Microsoft.Automation/automationAccounts/powerShell72Modules",
+            "apiVersion": "2023-11-01",
+            "name": "[concat(parameters('automationAccounts_FabricCapacityManagement_name'), '/Az.Sql')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Automation/automationAccounts', parameters('automationAccounts_FabricCapacityManagement_name'))]"
+            ],
+            "properties": {
+                "contentLink": {}
+            }
+        },
+        {
+            "type": "Microsoft.Automation/automationAccounts/powerShell72Modules",
+            "apiVersion": "2023-11-01",
+            "name": "[concat(parameters('automationAccounts_FabricCapacityManagement_name'), '/Az.SqlVirtualMachine')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Automation/automationAccounts', parameters('automationAccounts_FabricCapacityManagement_name'))]"
+            ],
+            "properties": {
+                "contentLink": {}
+            }
+        },
+        {
+            "type": "Microsoft.Automation/automationAccounts/powerShell72Modules",
+            "apiVersion": "2023-11-01",
+            "name": "[concat(parameters('automationAccounts_FabricCapacityManagement_name'), '/Az.StackHCI')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Automation/automationAccounts', parameters('automationAccounts_FabricCapacityManagement_name'))]"
+            ],
+            "properties": {
+                "contentLink": {}
+            }
+        },
+        {
+            "type": "Microsoft.Automation/automationAccounts/powerShell72Modules",
+            "apiVersion": "2023-11-01",
+            "name": "[concat(parameters('automationAccounts_FabricCapacityManagement_name'), '/Az.Storage')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Automation/automationAccounts', parameters('automationAccounts_FabricCapacityManagement_name'))]"
+            ],
+            "properties": {
+                "contentLink": {}
+            }
+        },
+        {
+            "type": "Microsoft.Automation/automationAccounts/powerShell72Modules",
+            "apiVersion": "2023-11-01",
+            "name": "[concat(parameters('automationAccounts_FabricCapacityManagement_name'), '/Az.StorageMover')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Automation/automationAccounts', parameters('automationAccounts_FabricCapacityManagement_name'))]"
+            ],
+            "properties": {
+                "contentLink": {}
+            }
+        },
+        {
+            "type": "Microsoft.Automation/automationAccounts/powerShell72Modules",
+            "apiVersion": "2023-11-01",
+            "name": "[concat(parameters('automationAccounts_FabricCapacityManagement_name'), '/Az.StorageSync')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Automation/automationAccounts', parameters('automationAccounts_FabricCapacityManagement_name'))]"
+            ],
+            "properties": {
+                "contentLink": {}
+            }
+        },
+        {
+            "type": "Microsoft.Automation/automationAccounts/powerShell72Modules",
+            "apiVersion": "2023-11-01",
+            "name": "[concat(parameters('automationAccounts_FabricCapacityManagement_name'), '/Az.StreamAnalytics')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Automation/automationAccounts', parameters('automationAccounts_FabricCapacityManagement_name'))]"
+            ],
+            "properties": {
+                "contentLink": {}
+            }
+        },
+        {
+            "type": "Microsoft.Automation/automationAccounts/powerShell72Modules",
+            "apiVersion": "2023-11-01",
+            "name": "[concat(parameters('automationAccounts_FabricCapacityManagement_name'), '/Az.Support')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Automation/automationAccounts', parameters('automationAccounts_FabricCapacityManagement_name'))]"
+            ],
+            "properties": {
+                "contentLink": {}
+            }
+        },
+        {
+            "type": "Microsoft.Automation/automationAccounts/powerShell72Modules",
+            "apiVersion": "2023-11-01",
+            "name": "[concat(parameters('automationAccounts_FabricCapacityManagement_name'), '/Az.Synapse')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Automation/automationAccounts', parameters('automationAccounts_FabricCapacityManagement_name'))]"
+            ],
+            "properties": {
+                "contentLink": {}
+            }
+        },
+        {
+            "type": "Microsoft.Automation/automationAccounts/powerShell72Modules",
+            "apiVersion": "2023-11-01",
+            "name": "[concat(parameters('automationAccounts_FabricCapacityManagement_name'), '/Az.TrafficManager')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Automation/automationAccounts', parameters('automationAccounts_FabricCapacityManagement_name'))]"
+            ],
+            "properties": {
+                "contentLink": {}
+            }
+        },
+        {
+            "type": "Microsoft.Automation/automationAccounts/powerShell72Modules",
+            "apiVersion": "2023-11-01",
+            "name": "[concat(parameters('automationAccounts_FabricCapacityManagement_name'), '/Az.Websites')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Automation/automationAccounts', parameters('automationAccounts_FabricCapacityManagement_name'))]"
+            ],
+            "properties": {
+                "contentLink": {}
+            }
+        },
+        {
+            "type": "Microsoft.Automation/automationAccounts/python3Packages",
+            "apiVersion": "2023-11-01",
+            "name": "[concat(parameters('automationAccounts_FabricCapacityManagement_name'), '/binapy')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Automation/automationAccounts', parameters('automationAccounts_FabricCapacityManagement_name'))]"
+            ],
+            "properties": {
+                "contentLink": {}
+            }
+        },
+        {
+            "type": "Microsoft.Automation/automationAccounts/python3Packages",
+            "apiVersion": "2023-11-01",
+            "name": "[concat(parameters('automationAccounts_FabricCapacityManagement_name'), '/furl')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Automation/automationAccounts', parameters('automationAccounts_FabricCapacityManagement_name'))]"
+            ],
+            "properties": {
+                "contentLink": {}
+            }
+        },
+        {
+            "type": "Microsoft.Automation/automationAccounts/python3Packages",
+            "apiVersion": "2023-11-01",
+            "name": "[concat(parameters('automationAccounts_FabricCapacityManagement_name'), '/jwskate')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Automation/automationAccounts', parameters('automationAccounts_FabricCapacityManagement_name'))]"
+            ],
+            "properties": {
+                "contentLink": {}
+            }
+        },
+        {
+            "type": "Microsoft.Automation/automationAccounts/python3Packages",
+            "apiVersion": "2023-11-01",
+            "name": "[concat(parameters('automationAccounts_FabricCapacityManagement_name'), '/orderedmultidict')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Automation/automationAccounts', parameters('automationAccounts_FabricCapacityManagement_name'))]"
+            ],
+            "properties": {
+                "contentLink": {}
+            }
+        },
+        {
+            "type": "Microsoft.Automation/automationAccounts/python3Packages",
+            "apiVersion": "2023-11-01",
+            "name": "[concat(parameters('automationAccounts_FabricCapacityManagement_name'), '/requests_oauth2client')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Automation/automationAccounts', parameters('automationAccounts_FabricCapacityManagement_name'))]"
+            ],
+            "properties": {
+                "contentLink": {}
+            }
+        },
+        {
+            "type": "Microsoft.Automation/automationAccounts/python3Packages",
+            "apiVersion": "2023-11-01",
+            "name": "[concat(parameters('automationAccounts_FabricCapacityManagement_name'), '/typing_extensions')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Automation/automationAccounts', parameters('automationAccounts_FabricCapacityManagement_name'))]"
+            ],
+            "properties": {
+                "contentLink": {}
+            }
+        },
+        {
+            "type": "Microsoft.Automation/automationAccounts/runbooks",
+            "apiVersion": "2023-11-01",
+            "name": "[concat(parameters('automationAccounts_FabricCapacityManagement_name'), '/ResumeCapacity')]",
+            "location": "westeurope",
+            "dependsOn": [
+                "[resourceId('Microsoft.Automation/automationAccounts', parameters('automationAccounts_FabricCapacityManagement_name'))]"
+            ],
+            "properties": {
+                "runbookType": "Python3",
+                "logVerbose": false,
+                "logProgress": false,
+                "logActivityTrace": 0
+            }
+        },
+        {
+            "type": "Microsoft.Automation/automationAccounts/runbooks",
+            "apiVersion": "2023-11-01",
+            "name": "[concat(parameters('automationAccounts_FabricCapacityManagement_name'), '/SuspendCapacity')]",
+            "location": "westeurope",
+            "dependsOn": [
+                "[resourceId('Microsoft.Automation/automationAccounts', parameters('automationAccounts_FabricCapacityManagement_name'))]"
+            ],
+            "properties": {
+                "runbookType": "Python3",
+                "logVerbose": false,
+                "logProgress": false,
+                "logActivityTrace": 0
+            }
+        },
+        {
+            "type": "Microsoft.Automation/automationAccounts/runtimeEnvironments",
+            "apiVersion": "2023-05-15-preview",
+            "name": "[concat(parameters('automationAccounts_FabricCapacityManagement_name'), '/PowerShell-5.1')]",
+            "location": "westeurope",
+            "dependsOn": [
+                "[resourceId('Microsoft.Automation/automationAccounts', parameters('automationAccounts_FabricCapacityManagement_name'))]"
+            ],
+            "properties": {
+                "runtime": {
+                    "language": "PowerShell",
+                    "version": "5.1"
+                },
+                "defaultPackages": {
+                    "az": "8.0.0"
+                },
+                "description": "System-generated Runtime Environment for your Automation account with Runtime language: PowerShell & Runtime version: 5.1. It automatically populates Packages defined for PowerShell 5.1 runtime version in your Automation account. This Runtime environment is non-editable. "
+            }
+        },
+        {
+            "type": "Microsoft.Automation/automationAccounts/runtimeEnvironments",
+            "apiVersion": "2023-05-15-preview",
+            "name": "[concat(parameters('automationAccounts_FabricCapacityManagement_name'), '/PowerShell-7.1')]",
+            "location": "westeurope",
+            "dependsOn": [
+                "[resourceId('Microsoft.Automation/automationAccounts', parameters('automationAccounts_FabricCapacityManagement_name'))]"
+            ],
+            "properties": {
+                "runtime": {
+                    "language": "PowerShell",
+                    "version": "7.1"
+                },
+                "defaultPackages": {
+                    "az": "8.0.0"
+                },
+                "description": "System-generated Runtime Environment for your Automation account with Runtime language: PowerShell & Runtime version: 7.1. It automatically populates Packages defined for PowerShell 7.1 runtime version in your Automation account. This Runtime environment is non-editable. "
+            }
+        },
+        {
+            "type": "Microsoft.Automation/automationAccounts/runtimeEnvironments",
+            "apiVersion": "2023-05-15-preview",
+            "name": "[concat(parameters('automationAccounts_FabricCapacityManagement_name'), '/PowerShell-7.2')]",
+            "location": "westeurope",
+            "dependsOn": [
+                "[resourceId('Microsoft.Automation/automationAccounts', parameters('automationAccounts_FabricCapacityManagement_name'))]"
+            ],
+            "properties": {
+                "runtime": {
+                    "language": "PowerShell",
+                    "version": "7.2"
+                },
+                "defaultPackages": {
+                    "az": "11.2.0",
+                    "azure cli": "2.56.0"
+                },
+                "description": "System-generated Runtime Environment for your Automation account with Runtime language: PowerShell & Runtime version: 7.2. It automatically populates Packages defined for PowerShell 7.2 runtime version in your Automation account. This Runtime environment is non-editable. "
+            }
+        },
+        {
+            "type": "Microsoft.Automation/automationAccounts/runtimeEnvironments",
+            "apiVersion": "2023-05-15-preview",
+            "name": "[concat(parameters('automationAccounts_FabricCapacityManagement_name'), '/Python-2.7')]",
+            "location": "westeurope",
+            "dependsOn": [
+                "[resourceId('Microsoft.Automation/automationAccounts', parameters('automationAccounts_FabricCapacityManagement_name'))]"
+            ],
+            "properties": {
+                "runtime": {
+                    "language": "Python",
+                    "version": "2.7"
+                },
+                "description": "System-generated Runtime Environment for your Automation account with Runtime language: Python & Runtime version: 2.7. It automatically populates Packages defined for Python 2.7 runtime version in your Automation account. This Runtime environment is non-editable. "
+            }
+        },
+        {
+            "type": "Microsoft.Automation/automationAccounts/runtimeEnvironments",
+            "apiVersion": "2023-05-15-preview",
+            "name": "[concat(parameters('automationAccounts_FabricCapacityManagement_name'), '/Python-3.10')]",
+            "location": "westeurope",
+            "dependsOn": [
+                "[resourceId('Microsoft.Automation/automationAccounts', parameters('automationAccounts_FabricCapacityManagement_name'))]"
+            ],
+            "properties": {
+                "runtime": {
+                    "language": "Python",
+                    "version": "3.10"
+                },
+                "description": "System-generated Runtime Environment for your Automation account with Runtime language: Python & Runtime version: 3.10. It automatically populates Packages defined for Python 3.10 runtime version in your Automation account. This Runtime environment is non-editable. "
+            }
+        },
+        {
+            "type": "Microsoft.Automation/automationAccounts/runtimeEnvironments",
+            "apiVersion": "2023-05-15-preview",
+            "name": "[concat(parameters('automationAccounts_FabricCapacityManagement_name'), '/Python-3.8')]",
+            "location": "westeurope",
+            "dependsOn": [
+                "[resourceId('Microsoft.Automation/automationAccounts', parameters('automationAccounts_FabricCapacityManagement_name'))]"
+            ],
+            "properties": {
+                "runtime": {
+                    "language": "Python",
+                    "version": "3.8"
+                },
+                "description": "System-generated Runtime Environment for your Automation account with Runtime language: Python & Runtime version: 3.8. It automatically populates Packages defined for Python 3.8 runtime version in your Automation account. This Runtime environment is non-editable. "
+            }
+        },
+        {
+            "type": "Microsoft.Automation/automationAccounts/variables",
+            "apiVersion": "2023-11-01",
+            "name": "[concat(parameters('automationAccounts_FabricCapacityManagement_name'), '/client_id')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Automation/automationAccounts', parameters('automationAccounts_FabricCapacityManagement_name'))]"
+            ],
+            "properties": {
+                "isEncrypted": false,
+                "value": "\"\""
+            }
+        },
+        {
+            "type": "Microsoft.Automation/automationAccounts/variables",
+            "apiVersion": "2023-11-01",
+            "name": "[concat(parameters('automationAccounts_FabricCapacityManagement_name'), '/client_secret')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Automation/automationAccounts', parameters('automationAccounts_FabricCapacityManagement_name'))]"
+            ],
+            "properties": {
+                "isEncrypted": true
+            }
+        },
+        {
+            "type": "Microsoft.Automation/automationAccounts/variables",
+            "apiVersion": "2023-11-01",
+            "name": "[concat(parameters('automationAccounts_FabricCapacityManagement_name'), '/token_endpoint')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Automation/automationAccounts', parameters('automationAccounts_FabricCapacityManagement_name'))]"
+            ],
+            "properties": {
+                "isEncrypted": false,
+                "value": "\"\""
+            }
+        },
+        {
+            "type": "Microsoft.Automation/automationAccounts/runtimeEnvironments/packages",
+            "apiVersion": "2023-05-15-preview",
+            "name": "[concat(parameters('automationAccounts_FabricCapacityManagement_name'), '/PowerShell-5.1/AuditPolicyDsc')]",
+            "location": "westeurope",
+            "dependsOn": [
+                "[resourceId('Microsoft.Automation/automationAccounts/runtimeEnvironments', parameters('automationAccounts_FabricCapacityManagement_name'), 'PowerShell-5.1')]",
+                "[resourceId('Microsoft.Automation/automationAccounts', parameters('automationAccounts_FabricCapacityManagement_name'))]"
+            ],
+            "properties": {
+                "contentLink": {}
+            }
+        },
+        {
+            "type": "Microsoft.Automation/automationAccounts/runtimeEnvironments/packages",
+            "apiVersion": "2023-05-15-preview",
+            "name": "[concat(parameters('automationAccounts_FabricCapacityManagement_name'), '/PowerShell-5.1/Azure')]",
+            "location": "westeurope",
+            "dependsOn": [
+                "[resourceId('Microsoft.Automation/automationAccounts/runtimeEnvironments', parameters('automationAccounts_FabricCapacityManagement_name'), 'PowerShell-5.1')]",
+                "[resourceId('Microsoft.Automation/automationAccounts', parameters('automationAccounts_FabricCapacityManagement_name'))]"
+            ],
+            "properties": {
+                "contentLink": {}
+            }
+        },
+        {
+            "type": "Microsoft.Automation/automationAccounts/runtimeEnvironments/packages",
+            "apiVersion": "2023-05-15-preview",
+            "name": "[concat(parameters('automationAccounts_FabricCapacityManagement_name'), '/PowerShell-5.1/Azure.Storage')]",
+            "location": "westeurope",
+            "dependsOn": [
+                "[resourceId('Microsoft.Automation/automationAccounts/runtimeEnvironments', parameters('automationAccounts_FabricCapacityManagement_name'), 'PowerShell-5.1')]",
+                "[resourceId('Microsoft.Automation/automationAccounts', parameters('automationAccounts_FabricCapacityManagement_name'))]"
+            ],
+            "properties": {
+                "contentLink": {}
+            }
+        },
+        {
+            "type": "Microsoft.Automation/automationAccounts/runtimeEnvironments/packages",
+            "apiVersion": "2023-05-15-preview",
+            "name": "[concat(parameters('automationAccounts_FabricCapacityManagement_name'), '/PowerShell-5.1/AzureRM.Automation')]",
+            "location": "westeurope",
+            "dependsOn": [
+                "[resourceId('Microsoft.Automation/automationAccounts/runtimeEnvironments', parameters('automationAccounts_FabricCapacityManagement_name'), 'PowerShell-5.1')]",
+                "[resourceId('Microsoft.Automation/automationAccounts', parameters('automationAccounts_FabricCapacityManagement_name'))]"
+            ],
+            "properties": {
+                "contentLink": {}
+            }
+        },
+        {
+            "type": "Microsoft.Automation/automationAccounts/runtimeEnvironments/packages",
+            "apiVersion": "2023-05-15-preview",
+            "name": "[concat(parameters('automationAccounts_FabricCapacityManagement_name'), '/PowerShell-5.1/AzureRM.Compute')]",
+            "location": "westeurope",
+            "dependsOn": [
+                "[resourceId('Microsoft.Automation/automationAccounts/runtimeEnvironments', parameters('automationAccounts_FabricCapacityManagement_name'), 'PowerShell-5.1')]",
+                "[resourceId('Microsoft.Automation/automationAccounts', parameters('automationAccounts_FabricCapacityManagement_name'))]"
+            ],
+            "properties": {
+                "contentLink": {}
+            }
+        },
+        {
+            "type": "Microsoft.Automation/automationAccounts/runtimeEnvironments/packages",
+            "apiVersion": "2023-05-15-preview",
+            "name": "[concat(parameters('automationAccounts_FabricCapacityManagement_name'), '/PowerShell-5.1/AzureRM.Profile')]",
+            "location": "westeurope",
+            "dependsOn": [
+                "[resourceId('Microsoft.Automation/automationAccounts/runtimeEnvironments', parameters('automationAccounts_FabricCapacityManagement_name'), 'PowerShell-5.1')]",
+                "[resourceId('Microsoft.Automation/automationAccounts', parameters('automationAccounts_FabricCapacityManagement_name'))]"
+            ],
+            "properties": {
+                "contentLink": {}
+            }
+        },
+        {
+            "type": "Microsoft.Automation/automationAccounts/runtimeEnvironments/packages",
+            "apiVersion": "2023-05-15-preview",
+            "name": "[concat(parameters('automationAccounts_FabricCapacityManagement_name'), '/PowerShell-5.1/AzureRM.Resources')]",
+            "location": "westeurope",
+            "dependsOn": [
+                "[resourceId('Microsoft.Automation/automationAccounts/runtimeEnvironments', parameters('automationAccounts_FabricCapacityManagement_name'), 'PowerShell-5.1')]",
+                "[resourceId('Microsoft.Automation/automationAccounts', parameters('automationAccounts_FabricCapacityManagement_name'))]"
+            ],
+            "properties": {
+                "contentLink": {}
+            }
+        },
+        {
+            "type": "Microsoft.Automation/automationAccounts/runtimeEnvironments/packages",
+            "apiVersion": "2023-05-15-preview",
+            "name": "[concat(parameters('automationAccounts_FabricCapacityManagement_name'), '/PowerShell-5.1/AzureRM.Sql')]",
+            "location": "westeurope",
+            "dependsOn": [
+                "[resourceId('Microsoft.Automation/automationAccounts/runtimeEnvironments', parameters('automationAccounts_FabricCapacityManagement_name'), 'PowerShell-5.1')]",
+                "[resourceId('Microsoft.Automation/automationAccounts', parameters('automationAccounts_FabricCapacityManagement_name'))]"
+            ],
+            "properties": {
+                "contentLink": {}
+            }
+        },
+        {
+            "type": "Microsoft.Automation/automationAccounts/runtimeEnvironments/packages",
+            "apiVersion": "2023-05-15-preview",
+            "name": "[concat(parameters('automationAccounts_FabricCapacityManagement_name'), '/PowerShell-5.1/AzureRM.Storage')]",
+            "location": "westeurope",
+            "dependsOn": [
+                "[resourceId('Microsoft.Automation/automationAccounts/runtimeEnvironments', parameters('automationAccounts_FabricCapacityManagement_name'), 'PowerShell-5.1')]",
+                "[resourceId('Microsoft.Automation/automationAccounts', parameters('automationAccounts_FabricCapacityManagement_name'))]"
+            ],
+            "properties": {
+                "contentLink": {}
+            }
+        },
+        {
+            "type": "Microsoft.Automation/automationAccounts/runtimeEnvironments/packages",
+            "apiVersion": "2023-05-15-preview",
+            "name": "[concat(parameters('automationAccounts_FabricCapacityManagement_name'), '/Python-3.8/binapy')]",
+            "location": "westeurope",
+            "dependsOn": [
+                "[resourceId('Microsoft.Automation/automationAccounts/runtimeEnvironments', parameters('automationAccounts_FabricCapacityManagement_name'), 'Python-3.8')]",
+                "[resourceId('Microsoft.Automation/automationAccounts', parameters('automationAccounts_FabricCapacityManagement_name'))]"
+            ],
+            "properties": {
+                "contentLink": {}
+            }
+        },
+        {
+            "type": "Microsoft.Automation/automationAccounts/runtimeEnvironments/packages",
+            "apiVersion": "2023-05-15-preview",
+            "name": "[concat(parameters('automationAccounts_FabricCapacityManagement_name'), '/PowerShell-5.1/ComputerManagementDsc')]",
+            "location": "westeurope",
+            "dependsOn": [
+                "[resourceId('Microsoft.Automation/automationAccounts/runtimeEnvironments', parameters('automationAccounts_FabricCapacityManagement_name'), 'PowerShell-5.1')]",
+                "[resourceId('Microsoft.Automation/automationAccounts', parameters('automationAccounts_FabricCapacityManagement_name'))]"
+            ],
+            "properties": {
+                "contentLink": {}
+            }
+        },
+        {
+            "type": "Microsoft.Automation/automationAccounts/runtimeEnvironments/packages",
+            "apiVersion": "2023-05-15-preview",
+            "name": "[concat(parameters('automationAccounts_FabricCapacityManagement_name'), '/Python-3.8/furl')]",
+            "location": "westeurope",
+            "dependsOn": [
+                "[resourceId('Microsoft.Automation/automationAccounts/runtimeEnvironments', parameters('automationAccounts_FabricCapacityManagement_name'), 'Python-3.8')]",
+                "[resourceId('Microsoft.Automation/automationAccounts', parameters('automationAccounts_FabricCapacityManagement_name'))]"
+            ],
+            "properties": {
+                "contentLink": {}
+            }
+        },
+        {
+            "type": "Microsoft.Automation/automationAccounts/runtimeEnvironments/packages",
+            "apiVersion": "2023-05-15-preview",
+            "name": "[concat(parameters('automationAccounts_FabricCapacityManagement_name'), '/PowerShell-5.1/GPRegistryPolicyParser')]",
+            "location": "westeurope",
+            "dependsOn": [
+                "[resourceId('Microsoft.Automation/automationAccounts/runtimeEnvironments', parameters('automationAccounts_FabricCapacityManagement_name'), 'PowerShell-5.1')]",
+                "[resourceId('Microsoft.Automation/automationAccounts', parameters('automationAccounts_FabricCapacityManagement_name'))]"
+            ],
+            "properties": {
+                "contentLink": {}
+            }
+        },
+        {
+            "type": "Microsoft.Automation/automationAccounts/runtimeEnvironments/packages",
+            "apiVersion": "2023-05-15-preview",
+            "name": "[concat(parameters('automationAccounts_FabricCapacityManagement_name'), '/Python-3.8/jwskate')]",
+            "location": "westeurope",
+            "dependsOn": [
+                "[resourceId('Microsoft.Automation/automationAccounts/runtimeEnvironments', parameters('automationAccounts_FabricCapacityManagement_name'), 'Python-3.8')]",
+                "[resourceId('Microsoft.Automation/automationAccounts', parameters('automationAccounts_FabricCapacityManagement_name'))]"
+            ],
+            "properties": {
+                "contentLink": {}
+            }
+        },
+        {
+            "type": "Microsoft.Automation/automationAccounts/runtimeEnvironments/packages",
+            "apiVersion": "2023-05-15-preview",
+            "name": "[concat(parameters('automationAccounts_FabricCapacityManagement_name'), '/PowerShell-5.1/Microsoft.PowerShell.Core')]",
+            "location": "westeurope",
+            "dependsOn": [
+                "[resourceId('Microsoft.Automation/automationAccounts/runtimeEnvironments', parameters('automationAccounts_FabricCapacityManagement_name'), 'PowerShell-5.1')]",
+                "[resourceId('Microsoft.Automation/automationAccounts', parameters('automationAccounts_FabricCapacityManagement_name'))]"
+            ],
+            "properties": {
+                "contentLink": {}
+            }
+        },
+        {
+            "type": "Microsoft.Automation/automationAccounts/runtimeEnvironments/packages",
+            "apiVersion": "2023-05-15-preview",
+            "name": "[concat(parameters('automationAccounts_FabricCapacityManagement_name'), '/PowerShell-5.1/Microsoft.PowerShell.Diagnostics')]",
+            "location": "westeurope",
+            "dependsOn": [
+                "[resourceId('Microsoft.Automation/automationAccounts/runtimeEnvironments', parameters('automationAccounts_FabricCapacityManagement_name'), 'PowerShell-5.1')]",
+                "[resourceId('Microsoft.Automation/automationAccounts', parameters('automationAccounts_FabricCapacityManagement_name'))]"
+            ],
+            "properties": {
+                "contentLink": {}
+            }
+        },
+        {
+            "type": "Microsoft.Automation/automationAccounts/runtimeEnvironments/packages",
+            "apiVersion": "2023-05-15-preview",
+            "name": "[concat(parameters('automationAccounts_FabricCapacityManagement_name'), '/PowerShell-5.1/Microsoft.PowerShell.Management')]",
+            "location": "westeurope",
+            "dependsOn": [
+                "[resourceId('Microsoft.Automation/automationAccounts/runtimeEnvironments', parameters('automationAccounts_FabricCapacityManagement_name'), 'PowerShell-5.1')]",
+                "[resourceId('Microsoft.Automation/automationAccounts', parameters('automationAccounts_FabricCapacityManagement_name'))]"
+            ],
+            "properties": {
+                "contentLink": {}
+            }
+        },
+        {
+            "type": "Microsoft.Automation/automationAccounts/runtimeEnvironments/packages",
+            "apiVersion": "2023-05-15-preview",
+            "name": "[concat(parameters('automationAccounts_FabricCapacityManagement_name'), '/PowerShell-5.1/Microsoft.PowerShell.Security')]",
+            "location": "westeurope",
+            "dependsOn": [
+                "[resourceId('Microsoft.Automation/automationAccounts/runtimeEnvironments', parameters('automationAccounts_FabricCapacityManagement_name'), 'PowerShell-5.1')]",
+                "[resourceId('Microsoft.Automation/automationAccounts', parameters('automationAccounts_FabricCapacityManagement_name'))]"
+            ],
+            "properties": {
+                "contentLink": {}
+            }
+        },
+        {
+            "type": "Microsoft.Automation/automationAccounts/runtimeEnvironments/packages",
+            "apiVersion": "2023-05-15-preview",
+            "name": "[concat(parameters('automationAccounts_FabricCapacityManagement_name'), '/PowerShell-5.1/Microsoft.PowerShell.Utility')]",
+            "location": "westeurope",
+            "dependsOn": [
+                "[resourceId('Microsoft.Automation/automationAccounts/runtimeEnvironments', parameters('automationAccounts_FabricCapacityManagement_name'), 'PowerShell-5.1')]",
+                "[resourceId('Microsoft.Automation/automationAccounts', parameters('automationAccounts_FabricCapacityManagement_name'))]"
+            ],
+            "properties": {
+                "contentLink": {}
+            }
+        },
+        {
+            "type": "Microsoft.Automation/automationAccounts/runtimeEnvironments/packages",
+            "apiVersion": "2023-05-15-preview",
+            "name": "[concat(parameters('automationAccounts_FabricCapacityManagement_name'), '/PowerShell-5.1/Microsoft.WSMan.Management')]",
+            "location": "westeurope",
+            "dependsOn": [
+                "[resourceId('Microsoft.Automation/automationAccounts/runtimeEnvironments', parameters('automationAccounts_FabricCapacityManagement_name'), 'PowerShell-5.1')]",
+                "[resourceId('Microsoft.Automation/automationAccounts', parameters('automationAccounts_FabricCapacityManagement_name'))]"
+            ],
+            "properties": {
+                "contentLink": {}
+            }
+        },
+        {
+            "type": "Microsoft.Automation/automationAccounts/runtimeEnvironments/packages",
+            "apiVersion": "2023-05-15-preview",
+            "name": "[concat(parameters('automationAccounts_FabricCapacityManagement_name'), '/PowerShell-5.1/Orchestrator.AssetManagement.Cmdlets')]",
+            "location": "westeurope",
+            "dependsOn": [
+                "[resourceId('Microsoft.Automation/automationAccounts/runtimeEnvironments', parameters('automationAccounts_FabricCapacityManagement_name'), 'PowerShell-5.1')]",
+                "[resourceId('Microsoft.Automation/automationAccounts', parameters('automationAccounts_FabricCapacityManagement_name'))]"
+            ],
+            "properties": {
+                "contentLink": {}
+            }
+        },
+        {
+            "type": "Microsoft.Automation/automationAccounts/runtimeEnvironments/packages",
+            "apiVersion": "2023-05-15-preview",
+            "name": "[concat(parameters('automationAccounts_FabricCapacityManagement_name'), '/PowerShell-7.1/Orchestrator.AssetManagement.Cmdlets')]",
+            "location": "westeurope",
+            "dependsOn": [
+                "[resourceId('Microsoft.Automation/automationAccounts/runtimeEnvironments', parameters('automationAccounts_FabricCapacityManagement_name'), 'PowerShell-7.1')]",
+                "[resourceId('Microsoft.Automation/automationAccounts', parameters('automationAccounts_FabricCapacityManagement_name'))]"
+            ],
+            "properties": {
+                "contentLink": {}
+            }
+        },
+        {
+            "type": "Microsoft.Automation/automationAccounts/runtimeEnvironments/packages",
+            "apiVersion": "2023-05-15-preview",
+            "name": "[concat(parameters('automationAccounts_FabricCapacityManagement_name'), '/Python-3.8/orderedmultidict')]",
+            "location": "westeurope",
+            "dependsOn": [
+                "[resourceId('Microsoft.Automation/automationAccounts/runtimeEnvironments', parameters('automationAccounts_FabricCapacityManagement_name'), 'Python-3.8')]",
+                "[resourceId('Microsoft.Automation/automationAccounts', parameters('automationAccounts_FabricCapacityManagement_name'))]"
+            ],
+            "properties": {
+                "contentLink": {}
+            }
+        },
+        {
+            "type": "Microsoft.Automation/automationAccounts/runtimeEnvironments/packages",
+            "apiVersion": "2023-05-15-preview",
+            "name": "[concat(parameters('automationAccounts_FabricCapacityManagement_name'), '/PowerShell-5.1/PSDscResources')]",
+            "location": "westeurope",
+            "dependsOn": [
+                "[resourceId('Microsoft.Automation/automationAccounts/runtimeEnvironments', parameters('automationAccounts_FabricCapacityManagement_name'), 'PowerShell-5.1')]",
+                "[resourceId('Microsoft.Automation/automationAccounts', parameters('automationAccounts_FabricCapacityManagement_name'))]"
+            ],
+            "properties": {
+                "contentLink": {}
+            }
+        },
+        {
+            "type": "Microsoft.Automation/automationAccounts/runtimeEnvironments/packages",
+            "apiVersion": "2023-05-15-preview",
+            "name": "[concat(parameters('automationAccounts_FabricCapacityManagement_name'), '/Python-3.8/requests_oauth2client')]",
+            "location": "westeurope",
+            "dependsOn": [
+                "[resourceId('Microsoft.Automation/automationAccounts/runtimeEnvironments', parameters('automationAccounts_FabricCapacityManagement_name'), 'Python-3.8')]",
+                "[resourceId('Microsoft.Automation/automationAccounts', parameters('automationAccounts_FabricCapacityManagement_name'))]"
+            ],
+            "properties": {
+                "contentLink": {}
+            }
+        },
+        {
+            "type": "Microsoft.Automation/automationAccounts/runtimeEnvironments/packages",
+            "apiVersion": "2023-05-15-preview",
+            "name": "[concat(parameters('automationAccounts_FabricCapacityManagement_name'), '/PowerShell-5.1/SecurityPolicyDsc')]",
+            "location": "westeurope",
+            "dependsOn": [
+                "[resourceId('Microsoft.Automation/automationAccounts/runtimeEnvironments', parameters('automationAccounts_FabricCapacityManagement_name'), 'PowerShell-5.1')]",
+                "[resourceId('Microsoft.Automation/automationAccounts', parameters('automationAccounts_FabricCapacityManagement_name'))]"
+            ],
+            "properties": {
+                "contentLink": {}
+            }
+        },
+        {
+            "type": "Microsoft.Automation/automationAccounts/runtimeEnvironments/packages",
+            "apiVersion": "2023-05-15-preview",
+            "name": "[concat(parameters('automationAccounts_FabricCapacityManagement_name'), '/PowerShell-5.1/StateConfigCompositeResources')]",
+            "location": "westeurope",
+            "dependsOn": [
+                "[resourceId('Microsoft.Automation/automationAccounts/runtimeEnvironments', parameters('automationAccounts_FabricCapacityManagement_name'), 'PowerShell-5.1')]",
+                "[resourceId('Microsoft.Automation/automationAccounts', parameters('automationAccounts_FabricCapacityManagement_name'))]"
+            ],
+            "properties": {
+                "contentLink": {}
+            }
+        },
+        {
+            "type": "Microsoft.Automation/automationAccounts/runtimeEnvironments/packages",
+            "apiVersion": "2023-05-15-preview",
+            "name": "[concat(parameters('automationAccounts_FabricCapacityManagement_name'), '/Python-3.8/typing_extensions')]",
+            "location": "westeurope",
+            "dependsOn": [
+                "[resourceId('Microsoft.Automation/automationAccounts/runtimeEnvironments', parameters('automationAccounts_FabricCapacityManagement_name'), 'Python-3.8')]",
+                "[resourceId('Microsoft.Automation/automationAccounts', parameters('automationAccounts_FabricCapacityManagement_name'))]"
+            ],
+            "properties": {
+                "contentLink": {}
+            }
+        },
+        {
+            "type": "Microsoft.Automation/automationAccounts/runtimeEnvironments/packages",
+            "apiVersion": "2023-05-15-preview",
+            "name": "[concat(parameters('automationAccounts_FabricCapacityManagement_name'), '/PowerShell-5.1/xDSCDomainjoin')]",
+            "location": "westeurope",
+            "dependsOn": [
+                "[resourceId('Microsoft.Automation/automationAccounts/runtimeEnvironments', parameters('automationAccounts_FabricCapacityManagement_name'), 'PowerShell-5.1')]",
+                "[resourceId('Microsoft.Automation/automationAccounts', parameters('automationAccounts_FabricCapacityManagement_name'))]"
+            ],
+            "properties": {
+                "contentLink": {}
+            }
+        },
+        {
+            "type": "Microsoft.Automation/automationAccounts/runtimeEnvironments/packages",
+            "apiVersion": "2023-05-15-preview",
+            "name": "[concat(parameters('automationAccounts_FabricCapacityManagement_name'), '/PowerShell-5.1/xPowerShellExecutionPolicy')]",
+            "location": "westeurope",
+            "dependsOn": [
+                "[resourceId('Microsoft.Automation/automationAccounts/runtimeEnvironments', parameters('automationAccounts_FabricCapacityManagement_name'), 'PowerShell-5.1')]",
+                "[resourceId('Microsoft.Automation/automationAccounts', parameters('automationAccounts_FabricCapacityManagement_name'))]"
+            ],
+            "properties": {
+                "contentLink": {}
+            }
+        },
+        {
+            "type": "Microsoft.Automation/automationAccounts/runtimeEnvironments/packages",
+            "apiVersion": "2023-05-15-preview",
+            "name": "[concat(parameters('automationAccounts_FabricCapacityManagement_name'), '/PowerShell-5.1/xRemoteDesktopAdmin')]",
+            "location": "westeurope",
+            "dependsOn": [
+                "[resourceId('Microsoft.Automation/automationAccounts/runtimeEnvironments', parameters('automationAccounts_FabricCapacityManagement_name'), 'PowerShell-5.1')]",
+                "[resourceId('Microsoft.Automation/automationAccounts', parameters('automationAccounts_FabricCapacityManagement_name'))]"
+            ],
+            "properties": {
+                "contentLink": {}
+            }
+        }
+    ]
+}
